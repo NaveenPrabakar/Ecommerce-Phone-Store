@@ -4,13 +4,15 @@ import viteLogo from "/vite.svg";
 import "bootstrap/dist/css/bootstrap.css";
 import "./App.css";
 
+import SignUpForm from "./components/Signup";
+
 function App() {
   const [count, setCount] = useState(0);
 
   return (
     <>
       <div>
-        <Signup />
+        <SignUpForm />
       </div>
     </>
   );
