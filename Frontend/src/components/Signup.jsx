@@ -1,8 +1,53 @@
 import React from "react";
 import logo from "../assets/logo.gif";
 import Login from "./Login";
+import {useState } from "react";
 
 const SignUpForm = ({setStep}) => {
+
+  const [profile, setprofile] = useState({ //creating profile
+    Name: "",
+    Email:"",
+    password:"",
+    admin: false,
+    sell: [],
+    mail: [],
+    cart: []
+
+  });
+
+  const [error, setError] = useState(""); //display the error
+
+  const fill = (e) => { //update the information
+    const { name, value } = e.target;
+    setprofile({...profile, [name]: value});
+  };
+
+  const submit = (e) => {
+    if(profile.Name.length == 0){
+      setError("Please fill out your name");
+
+      return;
+    }
+    else if(profile.Email.length == 0){
+      setError("Please fill out your email");
+
+      return;
+    }
+
+    else if(profile.password.length == 0){
+      setError("Please enter a password");
+
+      return;
+    }
+
+    setStep("login");
+    
+  }
+
+
+
+
   return (
     //bootstrap template for sign up
     <div>
@@ -21,6 +66,8 @@ const SignUpForm = ({setStep}) => {
                         Sign up
                       </p>
 
+                      {error && <div className="alert alert-danger">{error}</div>}
+
                       <form className="mx-1 mx-md-4">
                         <div className="d-flex flex-row align-items-center mb-4">
                           <i className="fas fa-user fa-lg me-3 fa-fw"></i>
@@ -29,6 +76,9 @@ const SignUpForm = ({setStep}) => {
                               type="text"
                               id="form3Example1c"
                               className="form-control"
+                              name="Name"
+                              value={profile.Name}
+                              onChange={fill}
                             />
                             <label
                               className="form-label"
@@ -46,6 +96,9 @@ const SignUpForm = ({setStep}) => {
                               type="email"
                               id="form3Example3c"
                               className="form-control"
+                              name= "Email"
+                              value={profile.Email}
+                              onChange={fill}
                             />
                             <label
                               className="form-label"
@@ -63,6 +116,9 @@ const SignUpForm = ({setStep}) => {
                               type="password"
                               id="form3Example4c"
                               className="form-control"
+                              name= "password"
+                              value= {profile.password}
+                              onChange={fill}
                             />
                             <label
                               className="form-label"
@@ -73,27 +129,11 @@ const SignUpForm = ({setStep}) => {
                           </div>
                         </div>
 
-                        <div className="d-flex flex-row align-items-center mb-4">
-                          <i className="fas fa-key fa-lg me-3 fa-fw"></i>
-                          <div className="form-outline flex-fill mb-0">
-                            <input
-                              type="password"
-                              id="form3Example4cd"
-                              className="form-control"
-                            />
-                            <label
-                              className="form-label"
-                              htmlFor="form3Example4cd"
-                            >
-                              Repeat your password
-                            </label>
-                          </div>
-                        </div>
-
                         <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
                           <button
                             type="button"
                             className="btn btn-primary btn-lg"
+                            onClick={submit}
                           >
                             Register
                           </button>
