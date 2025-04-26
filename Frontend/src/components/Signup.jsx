@@ -2,7 +2,7 @@ import React from "react";
 import logo from "../assets/logo.gif";
 import Login from "./Login";
 
-const SignUpForm = () => {
+const SignUpForm = ({setStep}) => {
   return (
     //bootstrap template for sign up
     <div style={{ backgroundColor: "#800000" }}>
@@ -95,6 +95,17 @@ const SignUpForm = () => {
                             Register
                           </button>
                         </div>
+
+                        <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                          <button
+                            type="button"
+                            className="btn btn-primary btn-lg"
+                            onClick ={() => setStep("login")}
+                          >
+                            Already have an account? Login!
+                          </button>
+                        </div>
+
                       </form>
                     </div>
                     <div className="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">

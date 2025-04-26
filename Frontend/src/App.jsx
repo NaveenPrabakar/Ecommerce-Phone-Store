@@ -8,15 +8,14 @@ import SignUpForm from "./components/Signup";
 import Login from "./components/Login";
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [step, setStep] = useState("login");
 
   return (
-    <>
-      <div>
-        <SignUpForm />
-      </div>
-    </>
+    <div className = "app-container">
+      {step == "login" && <Login setStep={setStep} />}
+      {step == "signup" && <SignUpForm setStep={setStep} />}
+    </div>
   );
-}
+};
 
 export default App;
