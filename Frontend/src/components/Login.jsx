@@ -1,67 +1,56 @@
 import React from "react";
 import logo from "../assets/logo.gif";
-import Login from "./Login";
 import {useState } from "react";
 
-const SignUpForm = ({setStep, setSuccess}) => {
+const Login = ({setStep ,setSuccess,success}) => {
 
-  const [profile, setprofile] = useState({ //creating profile
-    Name: "",
-    Email:"",
-    password:"",
-    admin: false,
-    sell: [],
-    mail: [],
-    cart: []
+  const [user, setUser] = useState({ //creating profile
+      Email:"",
+      password:"",
+    });
 
-  });
+  const [error, setError] = useState("");
 
-  const [error, setError] = useState(""); //display the error
-
-  const fill = (e) => { //update the information
+  const filled = (e) => { //update the information
     const { name, value } = e.target;
-    setprofile({...profile, [name]: value});
+    setUser({...user, [name]: value});
   };
 
-  const submit = async () => {
-    if(profile.Name.length == 0){
-      setError("Please fill out your name");
+  const go = async () =>{
 
+    setSuccess("");
+    if(user.Email.length == 0){
+      setError("Please fill in Email.")
       return;
     }
-    else if(profile.Email.length == 0){
-      setError("Please fill out your email");
-
-      return;
-    }
-
-    else if(profile.password.length == 0){
-      setError("Please enter a password");
-
+    else if(user.password.length == 0){
+      setError("Please fill in password.")
       return;
     }
 
-    try{
-      const response = await fetch("http://localhost:8080/signup", {// send the request to sign up
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(profile),
-      });
+    const result = await fetch("http://localhost:8080/login",{// send the request to log in
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
+    });
 
-      if(response.status == 400){
-        setError("Email is already in use");
-      }
-      else if(response.status == 200){
-        setSuccess("Welcome to Phones Glore! Log in with your new Account!");
-        setStep("login");
-      }
+    if(result.status == 400){
+      setError("Email does not exist");
     }
-    catch(e){
-      setError("Unable to signup at this time");
+    else if(result.status == 401){
+      setError("Password is incorrect");
     }
-    
+    else if(result.status == 200){
+      const data = await result.json(); 
+      console.log("Login successful", data);
+      //switch to the home page
+    }
+    else{
+      setError("Unknown error");
+    }
+
   }
 
 
@@ -82,32 +71,13 @@ const SignUpForm = ({setStep, setSuccess}) => {
                   <div className="row justify-content-center">
                     <div className="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
                       <p className="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">
-                        Sign up
+                        Login In
                       </p>
 
                       {error && <div className="alert alert-danger">{error}</div>}
+                      {success && <div className= "alert alert-success">{success}</div>}
 
                       <form className="mx-1 mx-md-4">
-                        <div className="d-flex flex-row align-items-center mb-4">
-                          <i className="fas fa-user fa-lg me-3 fa-fw"></i>
-                          <div className="form-outline flex-fill mb-0">
-                            <input
-                              type="text"
-                              id="form3Example1c"
-                              className="form-control"
-                              name="Name"
-                              value={profile.Name}
-                              onChange={fill}
-                            />
-                            <label
-                              className="form-label"
-                              htmlFor="form3Example1c"
-                            >
-                              Your Name
-                            </label>
-                          </div>
-                        </div>
-
                         <div className="d-flex flex-row align-items-center mb-4">
                           <i className="fas fa-envelope fa-lg me-3 fa-fw"></i>
                           <div className="form-outline flex-fill mb-0">
@@ -116,8 +86,8 @@ const SignUpForm = ({setStep, setSuccess}) => {
                               id="form3Example3c"
                               className="form-control"
                               name= "Email"
-                              value={profile.Email}
-                              onChange={fill}
+                              value={user.Email}
+                              onChange={filled}
                             />
                             <label
                               className="form-label"
@@ -136,8 +106,8 @@ const SignUpForm = ({setStep, setSuccess}) => {
                               id="form3Example4c"
                               className="form-control"
                               name= "password"
-                              value= {profile.password}
-                              onChange={fill}
+                              value={user.password}
+                              onChange={filled}
                             />
                             <label
                               className="form-label"
@@ -151,20 +121,20 @@ const SignUpForm = ({setStep, setSuccess}) => {
                         <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
                           <button
                             type="button"
-                            className="btn btn-primary btn-lg"
-                            onClick={submit}
+                            className="btn btn-primary btn-lg hover:bg-red-500"
+                            onClick={go}
                           >
-                            Register
+                            Login
                           </button>
                         </div>
 
                         <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
                           <button
                             type="button"
-                            className="btn btn-primary btn-lg"
-                            onClick ={() => setStep("login")}
+                            className="btn btn-primary btn-lg hover:bg-red-500"
+                            onClick ={() => setStep("signup")}
                           >
-                            Already have an account? Login!
+                            Don't have an account? SignUp!
                           </button>
                         </div>
 
@@ -188,4 +158,4 @@ const SignUpForm = ({setStep, setSuccess}) => {
   );
 };
 
-export default SignUpForm;
+export default Login;
