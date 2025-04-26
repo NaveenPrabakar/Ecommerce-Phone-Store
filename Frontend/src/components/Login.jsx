@@ -1,7 +1,60 @@
 import React from "react";
 import logo from "../assets/logo.gif";
+import {useState } from "react";
 
-const Login = ({setStep}) => {
+const Login = ({setStep ,setSuccess,success}) => {
+
+  const [user, setUser] = useState({ //creating profile
+      Email:"",
+      password:"",
+    });
+
+  const [error, setError] = useState("");
+
+  const filled = (e) => { //update the information
+    const { name, value } = e.target;
+    setUser({...user, [name]: value});
+  };
+
+  const go = async () =>{
+
+    setSuccess("");
+    if(user.Email.length == 0){
+      setError("Please fill in Email.")
+      return;
+    }
+    else if(user.password.length == 0){
+      setError("Please fill in password.")
+      return;
+    }
+
+    const result = await fetch("http://localhost:8080/login",{// send the request to log in
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
+    });
+
+    if(result.status == 400){
+      setError("Email does not exist");
+    }
+    else if(result.status == 401){
+      setError("Password is incorrect");
+    }
+    else if(result.status == 200){
+      const data = await result.json(); 
+      console.log("Login successful", data);
+      //switch to the home page
+    }
+    else{
+      setError("Unknown error");
+    }
+
+  }
+
+
+
 
   return (
     //bootstrap template for sign up
@@ -21,6 +74,9 @@ const Login = ({setStep}) => {
                         Login In
                       </p>
 
+                      {error && <div className="alert alert-danger">{error}</div>}
+                      {success && <div className= "alert alert-success">{success}</div>}
+
                       <form className="mx-1 mx-md-4">
                         <div className="d-flex flex-row align-items-center mb-4">
                           <i className="fas fa-envelope fa-lg me-3 fa-fw"></i>
@@ -29,6 +85,9 @@ const Login = ({setStep}) => {
                               type="email"
                               id="form3Example3c"
                               className="form-control"
+                              name= "Email"
+                              value={user.Email}
+                              onChange={filled}
                             />
                             <label
                               className="form-label"
@@ -46,6 +105,9 @@ const Login = ({setStep}) => {
                               type="password"
                               id="form3Example4c"
                               className="form-control"
+                              name= "password"
+                              value={user.password}
+                              onChange={filled}
                             />
                             <label
                               className="form-label"
@@ -60,6 +122,7 @@ const Login = ({setStep}) => {
                           <button
                             type="button"
                             className="btn btn-primary btn-lg hover:bg-red-500"
+                            onClick={go}
                           >
                             Login
                           </button>

@@ -35,6 +35,14 @@ app.post("/signup", async (req, res) =>{
     const user = req.body;
 
     try{
+
+        const exist = await db.collection("phones").findOne({Email: user.Email});
+
+        if(exist){
+            res.status(400);
+            res.send("Email is already in use");
+        }
+        
         const newuser = await db.collection("phones").insertOne(user);
         console.log("User signed up: ", newuser);
         res.status(200);
@@ -51,7 +59,33 @@ app.post("/signup", async (req, res) =>{
 
 
 //Get request to sign up
-app.get("/login", async(req, res) => {
-    
+app.post("/login", async(req, res) => {
+    await client.connect();
+    console.log("Connected with MongoDB");
+
+    const user = req.body;
+
+    try{
+        const check = await db.collection("phones").findOne({Email: user.Email});
+
+        if(!check){
+            res.status(400);
+            res.send("Email does not exist");
+        }
+        else{
+            if(check.Password === user.password){
+                res.status(200);
+                res.send(check);
+            }
+            else{
+                res.status(401);
+                res.send("Incorrect password");
+            }
+        }
+    }
+    catch{
+        res.status(500);
+        res.send("Could not send to mongoDB");
+    }
 });
 

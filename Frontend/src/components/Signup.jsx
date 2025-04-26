@@ -3,7 +3,7 @@ import logo from "../assets/logo.gif";
 import Login from "./Login";
 import {useState } from "react";
 
-const SignUpForm = ({setStep}) => {
+const SignUpForm = ({setStep, setSuccess}) => {
 
   const [profile, setprofile] = useState({ //creating profile
     Name: "",
@@ -23,7 +23,7 @@ const SignUpForm = ({setStep}) => {
     setprofile({...profile, [name]: value});
   };
 
-  const submit = (e) => {
+  const submit = async () => {
     if(profile.Name.length == 0){
       setError("Please fill out your name");
 
@@ -41,7 +41,26 @@ const SignUpForm = ({setStep}) => {
       return;
     }
 
-    setStep("login");
+    try{
+      const response = await fetch("http://localhost:8080/signup", {// send the request to sign up
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(profile),
+      });
+
+      if(response.status == 400){
+        setError("Email is already in use");
+      }
+      else if(response.status == 200){
+        setSuccess("Welcome to Phones Glore! Log in with your new Account!");
+        setStep("login");
+      }
+    }
+    catch(e){
+      setError("Unable to signup at this time");
+    }
     
   }
 
