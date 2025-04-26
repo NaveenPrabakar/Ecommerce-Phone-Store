@@ -5,6 +5,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import "./App.css";
 
 import SignUpForm from "./components/Signup";
+import Login from "./components/Login";
 
 function App() {
   const [count, setCount] = useState(0);
