@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { Phones } from "../data/phone.json";
+import { Phones } from "../data/phone";
 
 const Home = ({ setUser, user }) => {
 

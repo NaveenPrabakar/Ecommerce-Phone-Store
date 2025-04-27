@@ -1,4 +1,5 @@
-[{
+
+export const Phones = [ {
     "products": [
         {
             "id": 121,
@@ -997,5 +998,4 @@
     "total": 16,
     "skip": 0,
     "limit": 16
-}
-]
+}];
