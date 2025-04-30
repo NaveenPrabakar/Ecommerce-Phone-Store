@@ -3,6 +3,7 @@ import Home from '../assets/home.png'
 import Shop from "../assets/shop.png"
 import Sell from "../assets/Sell.png"
 import Cart from "../assets/cart.png"
+import Settings from "../assets/settings.png"
 
 const NavBar = () => {
     return (
@@ -26,6 +27,11 @@ const NavBar = () => {
                 <a className="navbar-brand" href="#">
                     <img src={Cart} width="30" height="30" className="d-inline-block align-top" alt="Home"/>
                    Cart
+                </a>
+
+                <a className="navbar-brand" href="#">
+                    <img src={Settings} width="30" height="30" className="d-inline-block align-top" alt="Home"/>
+                   Settings
                 </a>
             </nav>
         </div>

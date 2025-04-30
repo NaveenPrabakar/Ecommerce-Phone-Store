@@ -1,5 +1,5 @@
 html, body {
-  background-color: rgb(52, 6, 6);  
+  background-image: url('./image.png');
 }
 
 #root {
