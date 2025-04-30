@@ -2,7 +2,7 @@ import React from "react";
 import logo from "../assets/logo.gif";
 import {useState } from "react";
 
-const Login = ({setStep ,setSuccess,success}) => {
+const Login = ({setStep ,setSuccess,success, setProf}) => {
 
   const [user, setUser] = useState({ //creating profile
       Email:"",
@@ -44,7 +44,10 @@ const Login = ({setStep ,setSuccess,success}) => {
     }
     else if(result.status == 200){
       const data = await result.json(); 
+      setProf(data);
       console.log("Login successful", data);
+      setStep("home"); //switch to the home page
+      
       //switch to the home page
     }
     else{
