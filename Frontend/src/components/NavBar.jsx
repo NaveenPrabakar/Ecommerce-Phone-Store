@@ -6,10 +6,11 @@ import Cart from "../assets/cart.png"
 import Settings from "../assets/settings.png"
 
 const NavBar = ({setStep, setProf, prof }) => {
+
     return (
         <div>
             <nav className="navbar navbar-light bg-light">
-                <a className="navbar-brand" href="#">
+                <a className="navbar-brand" href="#" onClick ={() => setStep("home")}>
                     <img src={Home} width="30" height="30" className="d-inline-block align-top" alt="Home"/>
                    Home
                 </a>
@@ -19,7 +20,7 @@ const NavBar = ({setStep, setProf, prof }) => {
                    Shop
                 </a>
 
-                <a className="navbar-brand" href="#">
+                <a className="navbar-brand" href="#" onClick ={() => setStep("sell")}>
                     <img src={Sell} width="30" height="30" className="d-inline-block align-top" alt="Home"/>
                    Sell
                 </a>
