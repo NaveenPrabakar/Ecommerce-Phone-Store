@@ -5,7 +5,7 @@ import Sell from "../assets/Sell.png"
 import Cart from "../assets/cart.png"
 import Settings from "../assets/settings.png"
 
-const NavBar = () => {
+const NavBar = ({setStep, setProf, prof }) => {
     return (
         <div>
             <nav className="navbar navbar-light bg-light">

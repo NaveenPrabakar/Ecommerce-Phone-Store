@@ -16,7 +16,7 @@ function App() {
     <div className = "app-container">
       {step == "login" && <Login setStep={setStep} setSuccess={setSuccess} success={success} setProf={setProf} />}
       {step == "signup" && <SignUpForm setStep={setStep} setSuccess={setSuccess} />}
-      {step == "home" && <Home setProf={setProf} prof={prof} />}
+      {step == "home" && <Home setStep={setStep} setProf={setProf} prof={prof} />}
     </div>
   );
 };
