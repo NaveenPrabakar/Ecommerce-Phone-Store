@@ -15,15 +15,16 @@ const Sell = ({ setStep, setProf, prof }) => {
         description: "",
         price: "",
         brand: "",
-        email: prof.email
+        email: prof.Email
       });
 
     const [error, setError] = useState("");
 
+    const [success, setSuccess] = useState("");
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setform({ ...form, [name]: value });
-
     };
 
     const submit = async (e) =>{
@@ -54,7 +55,28 @@ const Sell = ({ setStep, setProf, prof }) => {
             },
             body: JSON.stringify(form),
           });
-      
+
+          if(result.status == 200){
+            setError("");
+            console.log(result);
+            setSuccess("You have succesfully released your phone for purchase");
+
+
+            const result2 = await fetch("http://localhost:8080/login",{// send the request to log in
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(prof),
+              });
+
+            setProf(result2);
+            console.log(prof);
+
+          }
+          else if(result.status == 500){
+            setError("Something went wrong!");
+          }
     }
 
     
@@ -64,11 +86,20 @@ const Sell = ({ setStep, setProf, prof }) => {
       <NavBar setStep={setStep} setProf={setProf} prof={prof} />
 
       <div className="bg-light py-5">
+
+      </div>
+
+
+
+      <div className="bg-light py-5">
         <h2 className="text-center text-dark mb-4">
           Sell your old phones! We'll take them!
         </h2>
         <Form onSubmit={submit}>
+
         {error && <div className="alert alert-danger">{error}</div>}
+        {success && <div className= "alert alert-success">{success}</div>}
+
           <Form.Group className="mb-3">
             <Form.Label>Title</Form.Label>
             <Form.Control 
