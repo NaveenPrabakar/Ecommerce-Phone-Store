@@ -165,3 +165,37 @@ app.get("/sold/:email", async (req, res) =>{
     }
 });
 
+
+//change the password, or email, or username
+app.put("/change/:email", async (req, res) => {
+    await client.connect();
+    console.log("Connected with MongoDB");
+
+    const user = req.body;
+    const email = req.params.email;
+
+    try{
+        const check = await db.collection("phones").findOne({Email: email});
+
+        if(check.Password === user.password){
+            const update = {
+                $set: user
+            }
+            
+            const result = await db.collection("phones").updateOne({ Email: email }, update);
+
+            res.status(200);
+            res.send(result);
+        }
+        else{
+            res.status(400);
+            res.send("Password is wrong");
+        }
+    }
+    catch{
+        res.status(500);
+        res.send("Something went wrong");
+    }
+
+});
+
