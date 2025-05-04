@@ -41,7 +41,7 @@ const Home = ({ setStep, setProf, prof }) => {
                       <strong>Brand:</strong> {p.brand}
                     </Card.Text>
                     <div className="mt-auto">
-                      <Button variant="outline-primary" className="w-100">
+                      <Button variant="outline-primary" className="w-100" onClick ={() => {setStep("purchasing")}}>
                         View Details
                       </Button>
                     </div>
