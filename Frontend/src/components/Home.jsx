@@ -1,63 +1,69 @@
 import React from "react";
-import { useState } from "react";
 import { Phones } from "../data/phone";
-import NavBar from "./NavBar"
+import NavBar from "./NavBar";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Card, Row, Col, Container } from "react-bootstrap";
-import more from "../assets/image.png"
-import Footer from "./Footer"
+import { Card, Row, Col, Container, Button } from "react-bootstrap";
+import Footer from "./Footer";
 
-const Home = ({ setProf, prof }) => {
+const Home = ({ setStep, setProf, prof }) => {
   const preview = []; //only display three phones on the phone screen
 
-  for (let i = 0; i < 3; i++) { //only view the preview of the shop
+  for (let i = 0; i < 6; i++) {
+    //only view the preview of the shop
     preview.push(Phones[0].products[i]);
   }
 
   return (
     <div>
-      <NavBar />
+      <NavBar setStep={setStep} setProf={setProf} prof={prof} />
 
-      <div className= "bg-gray-200">
-      <Container>
-        <h1 className= "text-black">View our lates Phones!</h1>
-        <Row xs={1} md={2} lg={3} className="g-4 d-flex flex-row align-items-stretch">
-          {preview.map((p) => (
-            <Col key = {p.id}>
-              <div className = "hover:bg-black hover:text-white ">
-              <Card>
-                <Card.Img variant = "top" src={p.thumbnail}  style={{ height: "350px" }} alt={p.title}/>
-                <Card.Body>
-                  <Card.Title style={{ fontSize: "21px" }}> 
-                    {p.title}
-                  </Card.Title >
-                  <Card.Text style={{ color: "#000000" }}>
-                    <strong>Price: {p.price}</strong>
-                  </Card.Text>
-                  <Card.Text style={{ color: "#000000" }}>
-                    <strong>Brand: {p.brand}</strong>
-                  </Card.Text>
-                  <button className = "btn-sm">
-                    <img src={more} style= {{height: "100px", width: "100px"}} />
-                  </button>
-                </Card.Body>
-              </Card>
-              </div>
-            </Col>
-          ))}
-        </Row>
-      </Container>
+      <div className="bg-light py-5">
+        <Container>
+          <h2 className="text-center text-dark mb-4">
+            Explore Our Latest Phones!
+          </h2>
+          <Row xs={1} md={2} lg={3} className="g-4">
+            {preview.map((p) => (
+              <Col key={p.id}>
+                <Card className="h-100 shadow-sm border-0">
+                  <Card.Img
+                    variant="top"
+                    src={p.thumbnail}
+                    alt={p.title}
+                    style={{ height: "250px", objectFit: "cover" }}
+                  />
+                  <Card.Body className="d-flex flex-column">
+                    <Card.Title>{p.title}</Card.Title>
+                    <Card.Text className="text-muted mb-1">
+                      <strong>Price:</strong> ${p.price}
+                    </Card.Text>
+                    <Card.Text className="text-muted">
+                      <strong>Brand:</strong> {p.brand}
+                    </Card.Text>
+                    <div className="mt-auto">
+                      <Button variant="outline-primary" className="w-100">
+                        View Details
+                      </Button>
+                    </div>
+                  </Card.Body>
+                </Card>
+              </Col>
+            ))}
+          </Row>
+        </Container>
+      </div>
 
-      <hr style = {{margin: "20px"}}/>
-
-      <Container className= "bg-gray-500">
-        <h1>Our Message To Clients: </h1>
-        <p style ={{fontSize: "30px"}}>
-          Phones Glore is an E-commerce website that sells the latest models of phones. The unique feature being, people can sell their phones
-          to the public for purchase. It offers economic freedom for purchasing phones. Phones Glore also has a top notch admin staff that will
-          alert and remove potential scams.
-        </p>
-      </Container>
+      <div className="bg-light py-5">
+        <Container className="text-center py-4 bg-white">
+          <h2 className="mb-3">Our Message To Clients</h2>
+          <p className="lead">
+            Phones Glore is an e-commerce platform offering the latest phone
+            models. Unique to our platform, users can resell their phones
+            directly to buyers, enabling economic flexibility. Our expert admin
+            team actively monitors and removes potential scams for a secure
+            experience.
+          </p>
+        </Container>
       </div>
 
       <Footer />
