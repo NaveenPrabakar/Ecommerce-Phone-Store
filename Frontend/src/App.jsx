@@ -10,6 +10,7 @@ import Shop from "./components/Shop";
 import Purchasing from "./components/Purchasing";
 import Admin from "./components/Admin";
 import Sell from "./components/Sell";
+import Settings from "./components/Settings";
 
 function App() {
   const [step, setStep] = useState("login"); //switch between the pages
@@ -26,7 +27,8 @@ function App() {
       {step == "admin" && <Admin setStep={setStep} setProf={setProf} prof={prof} setItem={setItem}/>}
       {step == "shop" && <Shop setStep={setStep} setProf={setProf} prof={prof} setItem={setItem}/>}
       {step == "purchasing" && <Purchasing setStep={setStep} setProf={setProf} prof={prof} setCart={setCart} cart={cart} addItem={addItem}/>}
-      {step == "sell" && <Sell setStep={setStep} setProf={setProf} prof={prof} />}   
+      {step == "sell" && <Sell setStep={setStep} setProf={setProf} prof={prof} />} 
+      {step == "settings" && <Settings setStep={setStep} setProf={setProf} prof={prof} />}  
     </div>
   );
 };
