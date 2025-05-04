@@ -126,3 +126,42 @@ app.put("/sell", async(req, res) =>{
     }
 }); 
 
+//get request to get all the sold items
+app.get("/sold/:email", async (req, res) =>{
+
+    await client.connect();
+    console.log("Connected with MongoDB");
+
+    const email = req.params.email;
+
+    try{
+        const check = await db.collection("phones").findOne({Email: email});
+
+        console.log(check.sell);
+
+        if(check.sell.length == 0){
+            res.status(402);
+            res.send([]);
+        }
+
+        const data = JSON.parse(fs.readFileSync("./phone.json"));
+
+        const sold = [];
+
+        for(let i = 0; i < check.sell.length; i++){
+            for(let j = 0; j < data.products.length; j++){
+                if(check.sell[i] == data.products[j].id){
+                    sold.push(data.products[j]);
+                }
+            }
+        }
+
+        res.status(200);
+        res.send(sold);
+    }
+    catch{
+        res.status(500);
+        res.send("Something went wrong");
+    }
+});
+
