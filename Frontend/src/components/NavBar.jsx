@@ -15,7 +15,7 @@ const NavBar = ({setStep, setProf, prof }) => {
                    <span className = "text-white">Home</span>
                 </a>
 
-                <a className="navbar-brand" href="#">
+                <a className="navbar-brand" href="#" onClick ={() => setStep("shop")}>
                     <img src={Shop} width="30" height="30" className="d-inline-block align-top text-white" alt="Home"/>
                     <span className = "text-white">Shop</span>
                 </a>
