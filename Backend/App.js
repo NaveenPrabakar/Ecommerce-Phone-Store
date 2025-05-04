@@ -28,28 +28,28 @@ app.listen(port, () => {
 
 
 //Post request to sign up
-app.post("/signup", async (req, res) =>{
+app.post("/signup", async (req, res) => {
     await client.connect();
     console.log("Node connected successfully to POST MongoDB");
 
     const user = req.body;
 
-    try{
+    try {
 
-        const exist = await db.collection("phones").findOne({Email: user.Email});
+        const exist = await db.collection("phones").findOne({ Email: user.Email });
 
-        if(exist){
+        if (exist) {
             res.status(400);
             res.send("Email is already in use");
         }
-        
+
         const newuser = await db.collection("phones").insertOne(user);
         console.log("User signed up: ", newuser);
         res.status(200);
         res.send("User signed up!");
 
     }
-    catch(e){
+    catch (e) {
         res.status(500);
         res.send("Error sending to MongoDB");
     }
@@ -59,31 +59,31 @@ app.post("/signup", async (req, res) =>{
 
 
 //Get request to sign up
-app.post("/login", async(req, res) => {
+app.post("/login", async (req, res) => {
     await client.connect();
     console.log("Connected with MongoDB");
 
     const user = req.body;
 
-    try{
-        const check = await db.collection("phones").findOne({Email: user.Email});
+    try {
+        const check = await db.collection("phones").findOne({ Email: user.Email });
 
-        if(!check){
+        if (!check) {
             res.status(400);
             res.send("Email does not exist");
         }
-        else{
-            if(check.Password === user.password){
+        else {
+            if (check.Password === user.password) {
                 res.status(200);
                 res.send(check);
             }
-            else{
+            else {
                 res.status(401);
                 res.send("Incorrect password");
             }
         }
     }
-    catch{
+    catch {
         res.status(500);
         res.send("Could not send to mongoDB");
     }
@@ -91,14 +91,14 @@ app.post("/login", async(req, res) => {
 
 
 //updating what the person is selling
-app.put("/sell", async(req, res) =>{
+app.put("/sell", async (req, res) => {
     await client.connect();
     console.log("Connected with MongoDB");
 
     const form = req.body;
     const data = JSON.parse(fs.readFileSync("./phone.json")); //Save the phone data as json object
 
-    let id = data.products[data.products.length-1].id + 1; //get a new unique id for the sell product
+    let id = data.products[data.products.length - 1].id + 1; //get a new unique id for the sell product
     data.products.push(form); //submit the infromation to the json
     form.id = id;
 
@@ -106,40 +106,40 @@ app.put("/sell", async(req, res) =>{
 
     fs.writeFileSync("./phone.json", JSON.stringify(data)); //write back to the file
 
-    try{
-        const check = await db.collection("phones").findOne({Email: form.email});
+    try {
+        const check = await db.collection("phones").findOne({ Email: form.email });
         console.log(check);
         check.sell.push(id);
 
         const update = {
             $set: check
         }
-        
+
         const result = await db.collection("phones").updateOne({ Email: form.email }, update);
 
         res.status(200);
         res.send(result);
     }
-    catch{
+    catch {
         res.status(500);
         res.send("Unexpected error");
     }
-}); 
+});
 
 //get request to get all the sold items
-app.get("/sold/:email", async (req, res) =>{
+app.get("/sold/:email", async (req, res) => {
 
     await client.connect();
     console.log("Connected with MongoDB");
 
     const email = req.params.email;
 
-    try{
-        const check = await db.collection("phones").findOne({Email: email});
+    try {
+        const check = await db.collection("phones").findOne({ Email: email });
 
         console.log(check.sell);
 
-        if(check.sell.length == 0){
+        if (check.sell.length == 0) {
             res.status(402);
             res.send([]);
         }
@@ -148,9 +148,9 @@ app.get("/sold/:email", async (req, res) =>{
 
         const sold = [];
 
-        for(let i = 0; i < check.sell.length; i++){
-            for(let j = 0; j < data.products.length; j++){
-                if(check.sell[i] == data.products[j].id){
+        for (let i = 0; i < check.sell.length; i++) {
+            for (let j = 0; j < data.products.length; j++) {
+                if (check.sell[i] == data.products[j].id) {
                     sold.push(data.products[j]);
                 }
             }
@@ -159,7 +159,7 @@ app.get("/sold/:email", async (req, res) =>{
         res.status(200);
         res.send(sold);
     }
-    catch{
+    catch {
         res.status(500);
         res.send("Something went wrong");
     }
@@ -174,25 +174,26 @@ app.put("/change/:email", async (req, res) => {
     const user = req.body;
     const email = req.params.email;
 
-    try{
-        const check = await db.collection("phones").findOne({Email: email});
+    console.log(email);
 
-        if(check.Password === user.password){
-            const update = {
-                $set: user
+    try {
+        console.log(user);
+
+        const update = {
+            $set: {
+                Name: user.Name,
+                Email: user.Email
             }
-            
-            const result = await db.collection("phones").updateOne({ Email: email }, update);
+        }
 
-            res.status(200);
-            res.send(result);
-        }
-        else{
-            res.status(400);
-            res.send("Password is wrong");
-        }
+        const result = await db.collection("phones").updateOne({ Email: email }, update);
+
+        console.log(result);
+
+        res.status(200);
+        res.send(result);
     }
-    catch{
+    catch {
         res.status(500);
         res.send("Something went wrong");
     }
