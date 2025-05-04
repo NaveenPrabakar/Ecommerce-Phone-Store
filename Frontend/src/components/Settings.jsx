@@ -89,7 +89,7 @@ const Settings = ({ setStep, setProf, prof }) => {
             {error && <div className="alert alert-danger">{error}</div>}
             {success && <div className="alert alert-success">{success}</div>}
 
-            <div>
+            <div className="mb-5">
               <strong>Username: </strong> {prof.Name}
               <Button
                 variant="primary"
@@ -129,7 +129,7 @@ const Settings = ({ setStep, setProf, prof }) => {
               )}
             </div>
 
-            <div>
+            <div className="mb-5">
               <strong>Email: </strong> {prof.Email}
               <Button
                 variant="primary"
