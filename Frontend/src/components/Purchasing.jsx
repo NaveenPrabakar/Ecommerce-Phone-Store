@@ -1,6 +1,6 @@
 import React from "react";
 import NavBar from "./NavBar";
-import { Card, Row, Col, Container, Button } from "react-bootstrap";
+import { Card, Container, Button } from "react-bootstrap";
 import Footer from "./Footer";
 
 const Purchasing = ({ setStep, setProf, prof, setCart, cart, addItem }) => {
