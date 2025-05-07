@@ -7,6 +7,7 @@ import Footer from "./Footer";
 import Form from "react-bootstrap/Form";
 import { useState } from "react";
 import { useEffect } from "react";
+import Trash from "../assets/trash.jpg"
 
 const Sell = ({ setStep, setProf, prof }) => {
   const [form, setform] = useState({
@@ -37,9 +38,31 @@ const Sell = ({ setStep, setProf, prof }) => {
     console.log(soldItems);
   }
 
+  const handleDelete = async(id) =>{
+    const result = await fetch(`http://localhost:8080/done/${id}/${prof.Email}`, {
+      // send the form data to backend
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      }
+    });
+
+    if(result.status === 200){
+      const data = await result.json();
+      setProf(data);
+      get_sold();
+      setSuccess("Item was delete!");
+    }else{
+      setError("Item deletion was interrupted");
+    }
+  }
+
   useEffect(() => {
     get_sold();
   }, []);
+
+  useEffect(() => {
+  }, [soldItems]);
 
   const submit = async (e) => {
     e.preventDefault();
@@ -72,17 +95,10 @@ const Sell = ({ setStep, setProf, prof }) => {
       console.log(result);
       setSuccess("You have succesfully released your phone for purchase");
 
-      const result2 = await fetch("http://localhost:8080/login", {
-        // send the request to log in
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(prof),
-      });
-
-      setProf(result2);
-      console.log(prof);
+      const data = await result.json();
+      console.log(data);
+      setProf(data);
+      get_sold();
     } else if (result.status == 500) {
       setError("Something went wrong!");
     }
@@ -107,6 +123,10 @@ const Sell = ({ setStep, setProf, prof }) => {
                 <Card.Text>
                   <strong>Description: </strong>{p.description}
                 </Card.Text>
+
+                <Button variant="danger" className="mt-2" onClick={() => handleDelete(p.id)} style = {{width: "30px", height: "30px"}}>
+                  <img src={Trash} alt = "Delete"></img>
+                </Button>
               </Card.Body>
             </Card>
           ))}
