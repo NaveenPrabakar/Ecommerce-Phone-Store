@@ -42,8 +42,10 @@ router.put("/sell", async (req, res) => {
 
         const result = await db.collection("phones").updateOne({ Email: form.email }, update);
 
+        const updatedUser = await db.collection("phones").findOne({ Email: form.email });
+
         res.status(200);
-        res.send(result);
+        res.send(updatedUser);
     }
     catch {
         res.status(500);
@@ -67,6 +69,7 @@ router.get("/sold/:email", async (req, res) => {
         if (check.sell.length == 0) {
             res.status(402);
             res.send([]);
+            return;
         }
 
         const data = JSON.parse(fs.readFileSync("routes/phone.json"));
@@ -128,8 +131,10 @@ router.delete("/done/:id/:email", async (req, res) => {
 
         fs.writeFileSync("routes/phone.json", JSON.stringify(data));
 
+        const updatedUser = await db.collection("phones").findOne({ Email: email });
+
         res.status(200);
-        res.send(result);
+        res.send(updatedUser);
 
     }catch{
         res.status(500);
