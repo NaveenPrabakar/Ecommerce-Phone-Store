@@ -74,6 +74,19 @@ const Settings = ({ setStep, setProf, prof }) => {
       } else {
         setError("Something went wrong");
       }
+    }else if(change === "delete" && form.password.length > 0){
+      const result = await fetch(`http://localhost:8080/account/${prof.Email}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        }
+      });
+
+      if (result.status == 200) {
+        setStep("login");
+      } else {
+        setError("Something went wrong");
+      }
     }
   };
 
@@ -164,6 +177,34 @@ const Settings = ({ setStep, setProf, prof }) => {
 
                   <Button type="submit" variant="success">
                     Save
+                  </Button>
+                </Form>
+              )}
+            </div>
+
+            <div className="mb-5">
+              <Button
+                variant="danger"
+                type="submit"
+                onClick={() => setChange("email")}
+              >
+                Delete Account
+              </Button>
+              {change === "delete" && (
+                <Form onSubmit={submit}>
+                  <Form.Group className="mb-3">
+                    <Form.Label>Enter Password</Form.Label>
+                    <Form.Control
+                      type="password"
+                      name="password"
+                      placeholder="Enter password"
+                      value={form.password}
+                      onChange={handleChange}
+                    />
+                  </Form.Group>
+
+                  <Button type="submit" variant="success">
+                    Delete Account
                   </Button>
                 </Form>
               )}
