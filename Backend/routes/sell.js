@@ -92,5 +92,50 @@ router.get("/sold/:email", async (req, res) => {
     }
 });
 
+//delete the sold item
+router.delete("/done/:id/:email", async (req, res) => {
+    await client.connect();
+    console.log("Connected with MongoDB");
+
+    const email = req.params.email;
+    const id = Number(req.params.id);
+
+    console.log(id);
+
+    try{
+        const check = await db.collection("phones").findOne({ Email: email });
+
+        const temp = [];
+        for(let i = 0; i < check.sell.length; i++){
+            if(check.sell[i] !== id){
+                temp.push(check.sell[i]);
+            }
+        }
+
+        console.log(temp);
+
+        const update = {
+            $set: {
+                sell: temp
+            }
+        }
+
+        const result = await db.collection("phones").updateOne({ Email: email }, update);
+
+        const data = JSON.parse(fs.readFileSync("routes/phone.json"));
+
+        data.products = data.products.filter(item => Number(item.id) !== id);
+
+        fs.writeFileSync("routes/phone.json", JSON.stringify(data));
+
+        res.status(200);
+        res.send(result);
+
+    }catch{
+        res.status(500);
+        res.send("Error");
+    }
+})
+
 
 module.exports = router;
