@@ -186,7 +186,7 @@ const Settings = ({ setStep, setProf, prof }) => {
               <Button
                 variant="danger"
                 type="submit"
-                onClick={() => setChange("email")}
+                onClick={() => setChange("delete")}
               >
                 Delete Account
               </Button>

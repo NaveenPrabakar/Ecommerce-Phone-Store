@@ -95,18 +95,10 @@ const Sell = ({ setStep, setProf, prof }) => {
       console.log(result);
       setSuccess("You have succesfully released your phone for purchase");
 
-      const result2 = await fetch("http://localhost:8080/login", {
-        // send the request to log in
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(prof),
-      });
-
-      const data = await result2.json();
+      const data = await result.json();
       console.log(data);
       setProf(data);
+      get_sold();
     } else if (result.status == 500) {
       setError("Something went wrong!");
     }
