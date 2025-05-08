@@ -53,7 +53,7 @@ router.post("/sell", async (req, res) => {
     }
 });
 
-
+//Update
 router.put("/fix/:id", async (req, res) => {//update information
 
     const form = req.body;
