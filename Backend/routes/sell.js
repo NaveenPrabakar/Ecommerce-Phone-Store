@@ -16,7 +16,7 @@ router.use(bodyParser.json());
 
 
 //updating what the person is selling
-router.put("/sell", async (req, res) => {
+router.post("/sell", async (req, res) => {
     await client.connect();
     console.log("Connected with MongoDB");
 
@@ -53,6 +53,31 @@ router.put("/sell", async (req, res) => {
     }
 });
 
+
+router.put("/fix/:id", async (req, res) => {//update information
+
+    const form = req.body;
+    const id = Number(req.params.id);
+
+    try {
+        const data = JSON.parse(fs.readFileSync("routes/phone.json"));
+        const i = data.products.findIndex((d) => d.id == id);
+
+        data.products[i] = form;
+        data.products[i].id = id;
+
+        fs.writeFileSync("routes/phone.json", JSON.stringify(data));
+
+        res.status(200);
+        res.send(data.products[i]);
+    }
+    catch{
+        res.status(500);
+        res.send("Something went wrong");
+    }
+
+});
+
 //get request to get all the sold items
 router.get("/sold/:email", async (req, res) => {
 
@@ -73,7 +98,7 @@ router.get("/sold/:email", async (req, res) => {
         }
 
         const data = JSON.parse(fs.readFileSync("routes/phone.json"));
-        
+
         console.log(data);
 
         const sold = [];
@@ -105,12 +130,12 @@ router.delete("/done/:id/:email", async (req, res) => {
 
     console.log(id);
 
-    try{
+    try {
         const check = await db.collection("phones").findOne({ Email: email });
 
         const temp = [];
-        for(let i = 0; i < check.sell.length; i++){
-            if(check.sell[i] !== id){
+        for (let i = 0; i < check.sell.length; i++) {
+            if (check.sell[i] !== id) {
                 temp.push(check.sell[i]);
             }
         }
@@ -136,7 +161,7 @@ router.delete("/done/:id/:email", async (req, res) => {
         res.status(200);
         res.send(updatedUser);
 
-    }catch{
+    } catch {
         res.status(500);
         res.send("Error");
     }
