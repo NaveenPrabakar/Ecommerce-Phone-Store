@@ -31,7 +31,7 @@ const Rotate = ({ setStep, setProf, prof, setId, id }) => {
         <Container>
           <Button
             className="top-0 end-0 m-3" onClick={() => {setStep("home");}}>
-            Back
+            ⬅️ Back
           </Button>
           <Card>
             <Card.Title>{preview.title}</Card.Title>

@@ -20,7 +20,7 @@ const Home = ({ setStep, setProf, prof , setId}) => {
       <div className="bg-light py-5">
         <Container>
           <h2 className="text-center text-dark mb-4">
-            Explore Our Latest Phones!
+          📱🔍Explore Our Latest Phones! 🚀
           </h2>
           <Row xs={1} md={2} lg={3} className="g-4">
             {preview.map((p) => (
@@ -33,16 +33,16 @@ const Home = ({ setStep, setProf, prof , setId}) => {
                     style={{ height: "250px", objectFit: "cover" }}
                   />
                   <Card.Body className="d-flex flex-column">
-                    <Card.Title>{p.title}</Card.Title>
+                    <Card.Title>📱 {p.title}</Card.Title>
                     <Card.Text className="text-muted mb-1">
-                      <strong>Price:</strong> ${p.price}
+                      <strong>🏷️ Price:</strong> ${p.price}
                     </Card.Text>
                     <Card.Text className="text-muted">
-                      <strong>Brand:</strong> {p.brand}
+                      <strong>🏢 Brand:</strong> {p.brand}
                     </Card.Text>
                     <div className="mt-auto">
                       <Button variant="outline-primary" className="w-100" onClick ={() => {setId(p.id); setStep("rotate"); }}>
-                        View Details
+                       ℹ️ View Details
                       </Button>
                     </div>
                   </Card.Body>
@@ -55,7 +55,7 @@ const Home = ({ setStep, setProf, prof , setId}) => {
 
       <div className="bg-light py-5">
         <Container className="text-center py-4 bg-white">
-          <h2 className="mb-3">Our Message To Clients</h2>
+          <h2 className="mb-3">Our Message To Clients 😊</h2>
           <p className="lead">
             Phones Glore is an e-commerce platform offering the latest phone
             models. Unique to our platform, users can resell their phones

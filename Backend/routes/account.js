@@ -101,7 +101,7 @@ router.put("/change/:email", async (req, res) => {
         res.send("Something went wrong");
     }
 });
-
+//delete
 router.delete("/account/:email", async(req, res) => {
     await client.connect();
     console.log("Connected with MongoDB");
