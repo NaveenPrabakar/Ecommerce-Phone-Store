@@ -97,13 +97,13 @@ const Settings = ({ setStep, setProf, prof }) => {
       <div className="bg-light py-5">
         <Container>
           <Card className="h-100 shadow-sm border-0">
-            <h2 className="text-center text-dark mb-4">Profile Settings</h2>
+            <h2 className="text-center text-dark mb-4">👤 Profile Settings</h2>
 
             {error && <div className="alert alert-danger">{error}</div>}
             {success && <div className="alert alert-success">{success}</div>}
 
             <div className="mb-5">
-              <strong>Username: </strong> {prof.Name}
+              <strong> 🧑‍💻 Username: </strong> {prof.Name}
               <Button
                 
                 variant="primary"
@@ -137,20 +137,20 @@ const Settings = ({ setStep, setProf, prof }) => {
                   </Form.Group>
 
                   <Button type="submit" variant="success">
-                    Save
+                  💾 Save
                   </Button>
                 </Form>
               )}
             </div>
 
             <div className="mb-5">
-              <strong>Email: </strong> {prof.Email}
+              <strong> 📬 Email: </strong> {prof.Email}
               <Button
                 variant="primary"
                 type="submit"
                 onClick={() => setChange("email")}
               >
-                Email
+                Edit
               </Button>
               {change === "email" && (
                 <Form onSubmit={submit}>
@@ -177,7 +177,7 @@ const Settings = ({ setStep, setProf, prof }) => {
                   </Form.Group>
 
                   <Button type="submit" variant="success">
-                    Save
+                  💾 Save
                   </Button>
                 </Form>
               )}
@@ -189,7 +189,7 @@ const Settings = ({ setStep, setProf, prof }) => {
                 type="submit"
                 onClick={() => setChange("delete")}
               >
-                Delete Account
+                🗑️ Delete Account
               </Button>
               {change === "delete" && (
                 <Form onSubmit={submit}>
@@ -205,7 +205,7 @@ const Settings = ({ setStep, setProf, prof }) => {
                   </Form.Group>
 
                   <Button type="submit" variant="success">
-                    Delete Account
+                  🗑️ Delete Account
                   </Button>
                 </Form>
               )}

@@ -39,6 +39,41 @@ const Edit = ({ setStep, setProf, prof, id }) => {
     get_sold();
   }, []);
 
+
+  const submit = async (e) =>{
+
+    e.preventDefault();
+
+    if (form.title.length == 0) {
+        setError("Please Fill out the title");
+        return;
+      } else if (form.description.length == 0) {
+        setError("Please fill out the description.");
+        return;
+      } else if (form.price.length == 0) {
+        setError("Please fill out the price.");
+        return;
+      } else if (form.price.length == 0) {
+        setError("Please fill out the price");
+        return;
+      }
+
+      const result = await fetch(`http://localhost:8080/fix/${id}`, {
+        // send the form data to backend
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form),
+      });
+
+      if (result.status == 200) {
+        setStep("sell");
+      } else if (result.status == 500) {
+        setError("Something went wrong!");
+      }
+  }
+
   return (
     <div>
       <NavBar setStep={setStep} setProf={setProf} prof={prof} />
@@ -56,7 +91,7 @@ const Edit = ({ setStep, setProf, prof, id }) => {
         <Card className="shadow-sm">
           <Card.Body>
             <h3 className="text-center text-dark mb-4">Editing your phone</h3>
-            <Form>
+            <Form onSubmit={submit}>
               {error && <div className="alert alert-danger">{error}</div>}
               {success && <div className="alert alert-success">{success}</div>}
 

@@ -83,7 +83,7 @@ const Sell = ({ setStep, setProf, prof, setId }) => {
 
     const result = await fetch("http://localhost:8080/sell", {
       // send the form data to backend
-      method: "PUT",
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
@@ -116,12 +116,12 @@ const Sell = ({ setStep, setProf, prof, setId }) => {
           soldItems.map((p) => (
             <Card key={p.id}>
               <Card.Body className="d-flex flex-column">
-                <Card.Title>{p.title}</Card.Title>
+                <Card.Title>📱 {p.title}</Card.Title>
                 <Card.Text className="text-muted mb-1">
-                  <strong>Price:</strong> ${p.price}
+                  <strong> 🏷️ Price:</strong> ${p.price}
                 </Card.Text>
                 <Card.Text>
-                  <strong>Description: </strong>{p.description}
+                  <strong> 📝 Description: </strong>{p.description}
                 </Card.Text>
 
                 <Button variant="danger" className="mt-2" onClick={() => handleDelete(p.id)}>
@@ -141,7 +141,7 @@ const Sell = ({ setStep, setProf, prof, setId }) => {
           <Card className="shadow-sm">
             <Card.Body>
               <h3 className="text-center text-dark mb-4">
-                Sell your old phones! We'll take them!
+              🔄📱 Sell your old phones! We'll take them! 💸
               </h3>
               <Form onSubmit={submit}>
                 {error && <div className="alert alert-danger">{error}</div>}
@@ -195,7 +195,7 @@ const Sell = ({ setStep, setProf, prof, setId }) => {
                 </Form.Group>
 
                 <Button variant="primary" type="submit">
-                  Submit
+                ✅ Submit
                 </Button>
               </Form>
             </Card.Body>
