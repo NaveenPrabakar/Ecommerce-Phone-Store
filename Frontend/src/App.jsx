@@ -12,6 +12,7 @@ import Admin from "./components/Admin";
 import Sell from "./components/Sell";
 import Settings from "./components/Settings";
 import Cart from "./components/Cart";
+import Rotate from "./components/Rotate"
 
 function App() {
   const [step, setStep] = useState("login"); //switch between the pages
@@ -19,18 +20,20 @@ function App() {
   const [prof, setProf] = useState(null); //which user logged on
   const [cart, setCart] = useState([]); //Items in cart
   const [addItem, setItem] = useState(); //Item to be added to cart
+  const [id, setId] = useState(0); //set the id for the phone
 
   return (
     <div className = "app-container">
       {step == "login" && <Login setStep={setStep} setSuccess={setSuccess} success={success} setProf={setProf} />}
       {step == "signup" && <SignUpForm setStep={setStep} setSuccess={setSuccess} />}
-      {step == "home" && <Home setStep={setStep} setProf={setProf} prof={prof} />}
+      {step == "home" && <Home setStep={setStep} setProf={setProf} prof={prof} setId={setId} />}
       {step == "admin" && <Admin setStep={setStep} setProf={setProf} prof={prof} setItem={setItem}/>}
       {step == "shop" && <Shop setStep={setStep} setProf={setProf} prof={prof} setItem={setItem}/>}
       {step == "purchasing" && <Purchasing setStep={setStep} setProf={setProf} prof={prof} setCart={setCart} cart={cart} addItem={addItem}/>}
       {step == "sell" && <Sell setStep={setStep} setProf={setProf} prof={prof} cart={cart} />} 
       {step == "cart" && <Cart setStep={setStep} setProf={setProf} cart={cart} setCart={setCart} />}
-      {step == "settings" && <Settings setStep={setStep} setProf={setProf} prof={prof} />}  
+      {step == "settings" && <Settings setStep={setStep} setProf={setProf} prof={prof} />} 
+      {step == "rotate" && <Rotate setStep={setStep} setProf={setProf} prof={prof} setId={setId} id={id} />} 
     </div>
   );
 };

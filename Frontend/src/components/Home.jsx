@@ -5,7 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Card, Row, Col, Container, Button } from "react-bootstrap";
 import Footer from "./Footer";
 
-const Home = ({ setStep, setProf, prof }) => {
+const Home = ({ setStep, setProf, prof , setId}) => {
   const preview = []; //only display three phones on the phone screen
 
   for (let i = 0; i < 6; i++) {
@@ -41,7 +41,7 @@ const Home = ({ setStep, setProf, prof }) => {
                       <strong>Brand:</strong> {p.brand}
                     </Card.Text>
                     <div className="mt-auto">
-                      <Button variant="outline-primary" className="w-100" onClick ={() => {setStep("purchasing")}}>
+                      <Button variant="outline-primary" className="w-100" onClick ={() => {setId(p.id); setStep("rotate"); }}>
                         View Details
                       </Button>
                     </div>
