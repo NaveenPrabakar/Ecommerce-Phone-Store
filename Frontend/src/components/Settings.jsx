@@ -105,6 +105,7 @@ const Settings = ({ setStep, setProf, prof }) => {
             <div className="mb-5">
               <strong>Username: </strong> {prof.Name}
               <Button
+                
                 variant="primary"
                 type="submit"
                 onClick={() => setChange("name")}

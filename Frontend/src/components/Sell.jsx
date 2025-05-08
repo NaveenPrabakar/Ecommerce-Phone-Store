@@ -9,7 +9,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import Trash from "../assets/trash.jpg"
 
-const Sell = ({ setStep, setProf, prof }) => {
+const Sell = ({ setStep, setProf, prof, setId }) => {
   const [form, setform] = useState({
     title: "",
     description: "",
@@ -124,8 +124,12 @@ const Sell = ({ setStep, setProf, prof }) => {
                   <strong>Description: </strong>{p.description}
                 </Card.Text>
 
-                <Button variant="danger" className="mt-2" onClick={() => handleDelete(p.id)} style = {{width: "30px", height: "30px"}}>
-                  <img src={Trash} alt = "Delete"></img>
+                <Button variant="danger" className="mt-2" onClick={() => handleDelete(p.id)}>
+                   🗑️ Delete
+                </Button>
+
+                <Button variant="primary" className="mt-2" onClick={() => {setId(p.id); setStep("edit")}}>
+                ✏️ Edit
                 </Button>
               </Card.Body>
             </Card>
