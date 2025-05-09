@@ -50,12 +50,13 @@ router.post("/login", async (req, res) => {
     try {
         const check = await db.collection("phones").findOne({ Email: user.Email });
 
+
         if (!check) {
             res.status(400);
             res.send("Email does not exist");
         }
         else {
-            if (check.Password === user.password) {
+            if (check.password === user.password) {
                 res.status(200);
                 res.send(check);
             }
