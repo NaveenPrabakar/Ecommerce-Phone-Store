@@ -14,9 +14,11 @@ const host = "localhost";
 
 const account = require("./routes/account");
 const sell = require("./routes/sell");
+const ai = require("./routes/ai");
 
 app.use("/", account);
 app.use("/", sell);
+app.use("/", ai);
 
 
 app.listen(port, () => {

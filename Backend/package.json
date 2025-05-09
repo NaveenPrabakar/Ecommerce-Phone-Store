@@ -10,9 +10,11 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
+    "@google/genai": "^0.13.0",
     "body-parser": "^2.2.0",
     "cors": "^2.8.5",
     "express": "^5.1.0",
-    "mongodb": "^6.16.0"
+    "mongodb": "^6.16.0",
+    "openai": "^4.98.0"
   }
 }
