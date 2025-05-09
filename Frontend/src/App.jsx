@@ -14,6 +14,7 @@ import Settings from "./components/Settings";
 import Cart from "./components/Cart";
 import Rotate from "./components/Rotate"
 import Edit from "./components/Edit"
+import About from "./components/About"
 
 function App() {
   const [step, setStep] = useState("login"); //switch between the pages
@@ -36,6 +37,7 @@ function App() {
       {step == "settings" && <Settings setStep={setStep} setProf={setProf} prof={prof} />} 
       {step == "rotate" && <Rotate setStep={setStep} setProf={setProf} prof={prof} setId={setId} id={id} />} 
       {step == "edit" && <Edit setStep={setStep} setProf={setProf} prof={prof} id={id} />}
+      {step == "about" && <About setStep={setStep} setProf={setProf} prof={prof} />}
     </div>
   );
 };

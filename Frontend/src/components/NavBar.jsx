@@ -34,6 +34,12 @@ const NavBar = ({setStep, setProf, prof }) => {
                 ⚙️
                     <span className = "text-white">Settings</span>
                 </a>
+
+                 <a className="navbar-brand" href="#" onClick ={() => setStep("about")}>
+                👥
+                    <span className = "text-white">About</span>
+                </a>
+
             </nav>
         </div>
     );
