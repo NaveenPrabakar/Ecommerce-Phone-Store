@@ -3,11 +3,29 @@ import NavBar from "./NavBar";
 import { Card, Container, Button } from "react-bootstrap";
 import Footer from "./Footer";
 
-const Purchasing = ({ setStep, setProf, prof, setCart, cart, addItem }) => {
-  const addToCart = (item) => {
-    cart.push(item);
-    setCart(cart);
+const Purchasing = ({ setStep, setProf, prof, addItem }) => {
+  
+
+const addCartItem = async (item) => {
+    const result = await fetch(`http://localhost:8080/additem/${prof.Email}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(item),
+    });
+
+    if (result.status == 200) {
+      console.log(result);
+      const data = await result.json();
+      console.log(data);
+      setProf(data);
+    } else if (result.status == 500) {
+      setError("Error");
+    }
   };
+
+
 
   return (
     <div>
@@ -81,9 +99,8 @@ const Purchasing = ({ setStep, setProf, prof, setCart, cart, addItem }) => {
                     variant="outline-primary"
                     className="w-100"
                     onClick={() => {
-                      addToCart(addItem);
-                      console.log(cart);
                       setStep("shop");
+                      addCartItem(addItem);
                     }}
                   >
                     Add To Cart

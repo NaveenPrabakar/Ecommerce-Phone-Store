@@ -15,10 +15,12 @@ const host = "localhost";
 const account = require("./routes/account");
 const sell = require("./routes/sell");
 const ai = require("./routes/ai");
+const cart = require("./routes/cart");
 
 app.use("/", account);
 app.use("/", sell);
 app.use("/", ai);
+app.use("/", cart);
 
 
 app.listen(port, () => {

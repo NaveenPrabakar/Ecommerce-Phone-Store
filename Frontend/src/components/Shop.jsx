@@ -9,6 +9,7 @@ const Shop = ({ setStep, setProf, prof, setItem }) => {
   const addItem = (item) => {
     setItem(item);
   };
+
   
   return (
     <div>
