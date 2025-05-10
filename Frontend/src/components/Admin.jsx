@@ -9,6 +9,7 @@ const Admin = ({ setStep, setProf, prof, setItem }) => {
   const addItem = (item) => {
     setItem(item);
   };
+
   
   return (
     <div>
@@ -17,7 +18,7 @@ const Admin = ({ setStep, setProf, prof, setItem }) => {
       <div className="bg-light py-5">
         <Container>
           <h2 className="text-center text-dark mb-4">
-            Admin View
+            Phone Shop
           </h2>
           <Row xs={1} md={2} lg={3} className="g-4">
             {Phones[0].products.map((p) => (
@@ -30,15 +31,15 @@ const Admin = ({ setStep, setProf, prof, setItem }) => {
                     style={{ height: "80%", objectFit: "cover"}}
                   />
                   <Card.Body className="d-flex flex-column">
-                    <Card.Title>{p.title}</Card.Title>
+                    <Card.Title>📱{p.title}</Card.Title>
                     <Card.Text className="text-muted mb-1">
-                      <strong>Price:</strong> ${p.price}
+                      <strong> 🏷️ Price:</strong> ${p.price}
                     </Card.Text>
                     <Card.Text className="text-muted mb-1">
-                      <strong>Sale:</strong> {p.discountPercentage}% Off
+                      <strong>📣 Sale:</strong> {p.discountPercentage}% Off
                     </Card.Text>
                     <Card.Text className="text-muted">
-                      <strong>Brand:</strong> {p.brand}
+                      <strong>🏢 Brand:</strong> {p.brand}
                     </Card.Text>
                     <div className="mt-auto">
                       <Button variant="outline-primary" className="w-100" onClick ={() => {setStep("purchasing"); addItem(p)}}>
@@ -68,3 +69,4 @@ const Admin = ({ setStep, setProf, prof, setItem }) => {
 };
 
 export default Admin;
+

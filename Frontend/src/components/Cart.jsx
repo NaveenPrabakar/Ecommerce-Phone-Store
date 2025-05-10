@@ -2,21 +2,62 @@ import React from "react";
 import NavBar from "./NavBar";
 import { Card, Row, Col, Container, Button } from "react-bootstrap";
 import Footer from "./Footer";
+import { useEffect } from "react";
+import { useState } from "react";
 
-const Cart = ({ setStep, setProf, prof, cart, setCart }) => {
+const Cart = ({ setStep, setProf, prof }) => {
+  const [cart, setCart] = useState([]);
+
+  const getCart = async () => {
+    console.log(prof);
+    const result = await fetch(`http://localhost:8080/getcart/${prof.Email}`, {
+      method: "GET",
+    });
+
+    if (result.status == 200) {
+      console.log(result);
+      setCart(await result.json());
+    } 
+  };
+
+  useEffect(() => {
+    getCart();
+  }, [prof]);
+
   let total = 0;
   for (let i = 0; i < cart.length; i++) {
     total += cart[i].price * (1 - cart[i].discountPercentage / 100);
   }
 
-  const removeItem = (item) => {
-    let newCart = [];
-    for (let i = 0; i < cart.length; i++) {
-      if (i != cart.indexOf(item)) {
-        newCart.push(cart[i]);
+  const removeCartItem = async (item) => {
+    console.log(prof);
+    const result = await fetch(
+      `http://localhost:8080/removeitem/${prof.Email}/${item.id}`,
+      {
+        method: "DELETE",
       }
-    }
-    setCart(newCart);
+    );
+
+    if (result.status == 200) {
+      console.log(result);
+      const data = await result.json();
+      console.log(data);
+      setProf(data);
+    } 
+  };
+
+  const removeAll = async (item) => {
+    console.log(prof);
+    const result = await fetch(
+      `http://localhost:8080/removeall/${prof.Email}`,
+      {
+        method: "DELETE",
+      }
+    );
+
+    if (result.status == 200) {
+      console.log(result);
+    } 
   };
 
   if (cart.length == 0) {
@@ -67,7 +108,7 @@ const Cart = ({ setStep, setProf, prof, cart, setCart }) => {
                         variant="outline-primary"
                         className="w-100"
                         onClick={() => {
-                          removeItem(c);
+                          removeCartItem(c);
                         }}
                       >
                         Remove
@@ -86,7 +127,7 @@ const Cart = ({ setStep, setProf, prof, cart, setCart }) => {
             className="w-100"
             onClick={() => {
               setStep("login");
-              setCart([]);
+              removeAll();
             }}
           >
             Confirm Payment
