@@ -4,7 +4,6 @@ import NavBar from "./NavBar";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Card, Row, Col, Container, Button } from "react-bootstrap";
 import Footer from "./Footer";
-
 const Home = ({ setStep, setProf, prof , setId}) => {
   const preview = []; //only display three phones on the phone screen
 
@@ -65,7 +64,6 @@ const Home = ({ setStep, setProf, prof , setId}) => {
           </p>
         </Container>
       </div>
-
       <Footer />
     </div>
   );
