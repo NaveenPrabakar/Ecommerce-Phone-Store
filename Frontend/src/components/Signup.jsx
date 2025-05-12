@@ -41,6 +41,10 @@ const SignUpForm = ({setStep, setSuccess}) => {
       return;
     }
 
+    if(profile.Email.includes("admin")){
+      profile.admin = true;
+    }
+
     try{
       const response = await fetch("http://localhost:8080/signup", {// send the request to sign up
         method: "POST",

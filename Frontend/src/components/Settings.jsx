@@ -55,7 +55,6 @@ const Settings = ({ setStep, setProf, prof }) => {
       } else {
         setError("Something went wrong");
       }
-
     } else if (change === "email" && form.email.length > 0) {
       const email = prof.Email;
       prof.Email = form.email;
@@ -74,13 +73,16 @@ const Settings = ({ setStep, setProf, prof }) => {
       } else {
         setError("Something went wrong");
       }
-    }else if(change === "delete" && form.password.length > 0){
-      const result = await fetch(`http://localhost:8080/account/${prof.Email}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
+    } else if (change === "delete" && form.password.length > 0) {
+      const result = await fetch(
+        `http://localhost:8080/account/${prof.Email}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
         }
-      });
+      );
 
       if (result.status == 200) {
         setStep("login");
@@ -105,7 +107,6 @@ const Settings = ({ setStep, setProf, prof }) => {
             <div className="mb-5">
               <strong> 🧑‍💻 Username: </strong> {prof.Name}
               <Button
-                
                 variant="primary"
                 type="submit"
                 onClick={() => setChange("name")}
@@ -137,7 +138,7 @@ const Settings = ({ setStep, setProf, prof }) => {
                   </Form.Group>
 
                   <Button type="submit" variant="success">
-                  💾 Save
+                    💾 Save
                   </Button>
                 </Form>
               )}
@@ -177,7 +178,7 @@ const Settings = ({ setStep, setProf, prof }) => {
                   </Form.Group>
 
                   <Button type="submit" variant="success">
-                  💾 Save
+                    💾 Save
                   </Button>
                 </Form>
               )}
@@ -205,10 +206,19 @@ const Settings = ({ setStep, setProf, prof }) => {
                   </Form.Group>
 
                   <Button type="submit" variant="success">
-                  🗑️ Delete Account
+                    🗑️ Delete Account
                   </Button>
                 </Form>
               )}
+            </div>
+            <div className= "mb-5">
+              <Button
+                variant="primary"
+                type="submit"
+                onClick={() => setStep("login")}
+              >
+                Logout
+              </Button>
             </div>
           </Card>
         </Container>

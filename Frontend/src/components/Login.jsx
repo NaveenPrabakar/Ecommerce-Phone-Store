@@ -46,8 +46,13 @@ const Login = ({setStep ,setSuccess,success, setProf}) => {
       const data = await result.json(); 
       setProf(data);
       console.log("Login successful", data);
-      setStep("home"); //switch to the home page
-      
+
+      if(data.admin == true){
+        setStep("admin");
+      }
+      else{
+        setStep("home");
+      }      
       //switch to the home page
     }
     else{
