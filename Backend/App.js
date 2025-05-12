@@ -16,11 +16,15 @@ const account = require("./routes/account");
 const sell = require("./routes/sell");
 const ai = require("./routes/ai");
 const cart = require("./routes/cart");
+const admin = require("./routes/admin");
+const products = require("./routes/products");
 
 app.use("/", account);
 app.use("/", sell);
 app.use("/", ai);
 app.use("/", cart);
+app.use("/", admin);
+app.use("/", products);
 
 
 app.listen(port, () => {
