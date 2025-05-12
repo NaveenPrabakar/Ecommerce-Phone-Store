@@ -12,6 +12,7 @@ import Admin from "./components/Admin";
 import Sell from "./components/Sell";
 import Settings from "./components/Settings";
 import Cart from "./components/Cart";
+import Confirmation from "./components/Confirmation";
 import Rotate from "./components/Rotate"
 import Edit from "./components/Edit"
 import About from "./components/About"
@@ -37,6 +38,7 @@ function App() {
       {step == "rotate" && <Rotate setStep={setStep} setProf={setProf} prof={prof} setId={setId} id={id} />} 
       {step == "edit" && <Edit setStep={setStep} setProf={setProf} prof={prof} id={id} />}
       {step == "about" && <About setStep={setStep} setProf={setProf} prof={prof} />}
+      {step == "confirmation" && <Confirmation setStep={setStep} setProf={setProf} prof={prof} />}
     </div>
   );
 };
