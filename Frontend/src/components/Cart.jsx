@@ -9,7 +9,7 @@ const Cart = ({ setStep, setProf, prof }) => {
   const [cart, setCart] = useState([]);
 
   const getCart = async () => {
-    console.log(prof);
+    
     const result = await fetch(`http://localhost:8080/getcart/${prof.Email}`, {
       method: "GET",
     });
@@ -30,7 +30,7 @@ const Cart = ({ setStep, setProf, prof }) => {
   }
 
   const removeCartItem = async (item) => {
-    console.log(prof);
+    
     const result = await fetch(
       `http://localhost:8080/removeitem/${prof.Email}/${item.id}`,
       {
