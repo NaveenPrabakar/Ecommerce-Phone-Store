@@ -38,7 +38,7 @@ const Purchasing = ({ setStep, setProf, prof, addItem }) => {
                   alt={addItem.title}
                   className="w-50"
                   style={{
-                    height: "1000px",
+                    height: "900px",
                     width: "300px",
                     objectFit: "cover",
                   }}
@@ -99,7 +99,7 @@ const Purchasing = ({ setStep, setProf, prof, addItem }) => {
                   <div className="mt-20">
                     <Button
                       variant="outline-primary"
-                      className="w-100"
+                      className="w-95"
                       onClick={() => {
                         setStep("shop");
                         addCartItem(addItem);
@@ -109,7 +109,7 @@ const Purchasing = ({ setStep, setProf, prof, addItem }) => {
                     </Button>
                     <Button
                       variant="outline-primary"
-                      className="w-100"
+                      className="w-95 mt-3"
                       onClick={() => {
                         setStep("shop");
                       }}
@@ -159,7 +159,7 @@ const Purchasing = ({ setStep, setProf, prof, addItem }) => {
                   <div className="mt-20">
                     <Button
                       variant="outline-primary"
-                      className="w-100"
+                      className="w-90"
                       onClick={() => {
                         setStep("shop");
                         addCartItem(addItem);
@@ -169,7 +169,7 @@ const Purchasing = ({ setStep, setProf, prof, addItem }) => {
                     </Button>
                     <Button
                       variant="outline-primary"
-                      className="w-100"
+                      className="w-90 mt-3"
                       onClick={() => {
                         setStep("shop");
                       }}

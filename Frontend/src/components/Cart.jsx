@@ -9,7 +9,6 @@ const Cart = ({ setStep, setProf, prof }) => {
   const [cart, setCart] = useState([]);
 
   const getCart = async () => {
-    
     const result = await fetch(`http://localhost:8080/getcart/${prof.Email}`, {
       method: "GET",
     });
@@ -17,7 +16,7 @@ const Cart = ({ setStep, setProf, prof }) => {
     if (result.status == 200) {
       console.log(result);
       setCart(await result.json());
-    } 
+    }
   };
 
   useEffect(() => {
@@ -25,12 +24,12 @@ const Cart = ({ setStep, setProf, prof }) => {
   }, [prof]);
 
   let total = 0;
-  for (let i = 0; i < cart.length; i++) {
-    total += cart[i].price * (1 - cart[i].discountPercentage / 100);
+  for (let item of cart) {
+    let discount = item.discountPercentage || 0;
+    total += item.price * (1 - discount / 100);
   }
 
   const removeCartItem = async (item) => {
-    
     const result = await fetch(
       `http://localhost:8080/removeitem/${prof.Email}/${item.id}`,
       {
@@ -43,22 +42,9 @@ const Cart = ({ setStep, setProf, prof }) => {
       const data = await result.json();
       console.log(data);
       setProf(data);
-    } 
+    }
   };
 
-  const removeAll = async (item) => {
-    console.log(prof);
-    const result = await fetch(
-      `http://localhost:8080/removeall/${prof.Email}`,
-      {
-        method: "DELETE",
-      }
-    );
-
-    if (result.status == 200) {
-      console.log(result);
-    } 
-  };
 
   if (cart.length == 0) {
     return (
@@ -82,62 +68,61 @@ const Cart = ({ setStep, setProf, prof }) => {
         <Footer />
       </div>
     );
-  }
+  } else {
+    return (
+      <div>
+        <NavBar setStep={setStep} setProf={setProf} prof={prof} />
 
-  return (
-    <div>
-      <NavBar setStep={setStep} setProf={setProf} prof={prof} />
+        <div className="bg-light py-5">
+          <Container>
+            <h2 className="text-center text-dark mb-4">🛒Cart</h2>
+            <Row xs={1} md={2} lg={3} className="g-4">
+              {cart.map((c) => (
+                <Col key={c.id}>
+                  <Card className="h-100 shadow-sm border-0">
+                    <Card.Body className="d-flex flex-column">
+                      <Card.Title>{c.title}</Card.Title>
+                      <Card.Text className="text-muted mb-1">
+                        <strong>Price:</strong> ${c.price}
+                      </Card.Text>
+                      <Card.Text className="text-muted mb-1">
+                        <strong>Sale:</strong> {c.discountPercentage || 0}% Off
+                      </Card.Text>
+                      <div className="mt-auto">
+                        <Button
+                          variant="outline-primary"
+                          className="w-100"
+                          onClick={() => {
+                            removeCartItem(c);
+                          }}
+                        >
+                          Remove
+                        </Button>
+                      </div>
+                    </Card.Body>
+                  </Card>
+                </Col>
+              ))}
+            </Row>
+            <Card.Text className="text-muted mt-5">
+              <strong>Total:</strong> ${total.toFixed(2)}
+            </Card.Text>
+            <Button
+              variant="outline-primary"
+              className="w-100"
+              onClick={() => {
+                setStep("confirmation");
+              }}
+            >
+              Confirm Payment
+            </Button>
+          </Container>
+        </div>
 
-      <div className="bg-light py-5">
-        <Container>
-          <h2 className="text-center text-dark mb-4">Cart</h2>
-          <Row xs={1} md={2} lg={3} className="g-4">
-            {cart.map((c) => (
-              <Col key={c.id}>
-                <Card className="h-100 shadow-sm border-0">
-                  <Card.Body className="d-flex flex-column">
-                    <Card.Title>{c.title}</Card.Title>
-                    <Card.Text className="text-muted mb-1">
-                      <strong>Price:</strong> ${c.price}
-                    </Card.Text>
-                    <Card.Text className="text-muted mb-1">
-                      <strong>Sale:</strong> {c.discountPercentage}% Off
-                    </Card.Text>
-                    <div className="mt-auto">
-                      <Button
-                        variant="outline-primary"
-                        className="w-100"
-                        onClick={() => {
-                          removeCartItem(c);
-                        }}
-                      >
-                        Remove
-                      </Button>
-                    </div>
-                  </Card.Body>
-                </Card>
-              </Col>
-            ))}
-          </Row>
-          <Card.Text className="text-muted mt-5">
-            <strong>Total:</strong> ${total.toFixed(2)}
-          </Card.Text>
-          <Button
-            variant="outline-primary"
-            className="w-100"
-            onClick={() => {
-              setStep("login");
-              removeAll();
-            }}
-          >
-            Confirm Payment
-          </Button>
-        </Container>
+        <Footer />
       </div>
-
-      <Footer />
-    </div>
-  );
+    );
+  }
 };
 
 export default Cart;

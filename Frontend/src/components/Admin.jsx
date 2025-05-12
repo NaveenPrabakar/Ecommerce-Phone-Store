@@ -41,11 +41,18 @@ const Admin = ({ setStep, setProf, prof, setItem }) => {
 
   return (
     <div>
-      <NavBar setStep={setStep} setProf={setProf} prof={prof} />
-
       <div className="bg-light py-5">
         <Container>
           <h2 className="text-center text-dark mb-4">Admin View</h2>
+          <Button
+            variant="outline-primary"
+            className="w-30 mb-4"
+            onClick={() => {
+              setStep("login");
+            }}
+          >
+            Log Out
+          </Button>
           <Row xs={1} md={2} lg={3} className="g-4">
             {permanent.map((p) => (
               <Col key={p.id}>
@@ -80,9 +87,9 @@ const Admin = ({ setStep, setProf, prof, setItem }) => {
                     alt={p.title}
                     style={{ height: "65%", objectFit: "cover" }}
                   />
-                  <Card.Body className="d-flex flex-column">
+                  <Card.Body className="d-flex flex-column mt-3">
                     <Card.Title>📱{p.title}</Card.Title>
-                    <Card.Text className="text-muted mb-1">
+                    <Card.Text className="text-muted mb-1 mt-3">
                       <strong> 🏷️ Price:</strong> ${p.price}
                     </Card.Text>
                     <Card.Text className="text-muted">
