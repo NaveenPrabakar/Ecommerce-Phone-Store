@@ -33,7 +33,7 @@ const Settings = ({ setStep, setProf, prof }) => {
       return;
     }
 
-    if (form.password !== prof.Password) {
+    if (form.password !== prof.password) {
       setError("Incorrect password");
       return;
     }
