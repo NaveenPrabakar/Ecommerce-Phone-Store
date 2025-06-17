@@ -80,14 +80,14 @@ PORT=5000
 
 ```bash
 cd backend
-npm run dev
+npm start
 ```
 
 6. **Start the frontend:**
 
 ```bash
 cd frontend
-npm start
+npm run dev
 ```
 
 
