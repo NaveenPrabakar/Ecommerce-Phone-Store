@@ -1,52 +1,50 @@
-import React from "react";
-import logo from "../assets/logo.gif";
-import Login from "./Login";
-import {useState } from "react";
+import React, { useState } from "react";
+import { FaEnvelope, FaLock, FaEye, FaEyeSlash, FaUser } from 'react-icons/fa';
 
-const SignUpForm = ({setStep, setSuccess}) => {
-
-  const [profile, setprofile] = useState({ //creating profile
+const SignUpForm = ({ setStep, setSuccess }) => {
+  const [profile, setprofile] = useState({
     Name: "",
-    Email:"",
-    password:"",
+    Email: "",
+    password: "",
     admin: false,
     sell: [],
     mail: [],
     cart: []
-
   });
 
-  const [error, setError] = useState(""); //display the error
+  const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const fill = (e) => { //update the information
+  const fill = (e) => {
     const { name, value } = e.target;
-    setprofile({...profile, [name]: value});
+    setprofile({ ...profile, [name]: value });
   };
 
   const submit = async () => {
-    if(profile.Name.length == 0){
+    setError("");
+    setLoading(true);
+
+    if (profile.Name.length === 0) {
       setError("Please fill out your name");
-
+      setLoading(false);
       return;
-    }
-    else if(profile.Email.length == 0){
+    } else if (profile.Email.length === 0) {
       setError("Please fill out your email");
-
+      setLoading(false);
       return;
-    }
-
-    else if(profile.password.length == 0){
+    } else if (profile.password.length === 0) {
       setError("Please enter a password");
-
+      setLoading(false);
       return;
     }
 
-    if(profile.Email.includes("admin")){
+    if (profile.Email.includes("admin")) {
       profile.admin = true;
     }
 
-    try{
-      const response = await fetch("http://localhost:8080/signup", {// send the request to sign up
+    try {
+      const response = await fetch("http://localhost:8080/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -54,140 +52,157 @@ const SignUpForm = ({setStep, setSuccess}) => {
         body: JSON.stringify(profile),
       });
 
-      if(response.status == 400){
+      if (response.status === 400) {
         setError("Email is already in use");
-      }
-      else if(response.status == 200){
-        setSuccess("Welcome to Phones Glore! Log in with your new Account!");
+      } else if (response.status === 200) {
+        setSuccess("Welcome to PhoneStore! Log in with your new account!");
         setStep("login");
       }
-    }
-    catch(e){
+    } catch (e) {
       setError("Unable to signup at this time");
+    } finally {
+      setLoading(false);
     }
-    
-  }
-
-
-
+  };
 
   return (
-    //bootstrap template for sign up
-    <div>
-      <section className="vh-100">
-        <div className="container h-100">
-          <div className="row d-flex justify-content-center align-items-center h-100">
-            <div className="col-lg-12 col-xl-11">
-              <div className="bg-black card text-white" style={{ borderRadius: "25px" }}>
-                <div className="card-body p-md-5">
-                <h1 className="text-center">
-                    Phones Glore!
-                  </h1>
-                  <div className="row justify-content-center">
-                    <div className="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
-                      <p className="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">
-                        Sign up
-                      </p>
+    <div className="min-vh-100 d-flex align-items-center justify-content-center" style={{ background: 'linear-gradient(135deg, var(--primary-color), var(--secondary-color))' }}>
+      <div className="container">
+        <div className="row justify-content-center">
+          <div className="col-md-8 col-lg-6 col-xl-5">
+            <div className="form-modern">
+              {/* Header */}
+              <div className="text-center mb-4">
+                <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>📱</div>
+                <h2 className="mb-2">Join PhoneStore</h2>
+                <p className="text-muted">Create your account to get started</p>
+              </div>
 
-                      {error && <div className="alert alert-danger">{error}</div>}
+              {/* Error Message */}
+              {error && (
+                <div className="alert alert-danger d-flex align-items-center" role="alert">
+                  <div className="me-2">⚠️</div>
+                  {error}
+                </div>
+              )}
 
-                      <form className="mx-1 mx-md-4">
-                        <div className="d-flex flex-row align-items-center mb-4">
-                          <i className="fas fa-user fa-lg me-3 fa-fw"></i>
-                          <div className="form-outline flex-fill mb-0">
-                            <input
-                              type="text"
-                              id="form3Example1c"
-                              className="form-control"
-                              name="Name"
-                              value={profile.Name}
-                              onChange={fill}
-                            />
-                            <label
-                              className="form-label"
-                              htmlFor="form3Example1c"
-                            >
-                              Your Name
-                            </label>
-                          </div>
-                        </div>
-
-                        <div className="d-flex flex-row align-items-center mb-4">
-                          <i className="fas fa-envelope fa-lg me-3 fa-fw"></i>
-                          <div className="form-outline flex-fill mb-0">
-                            <input
-                              type="email"
-                              id="form3Example3c"
-                              className="form-control"
-                              name= "Email"
-                              value={profile.Email}
-                              onChange={fill}
-                            />
-                            <label
-                              className="form-label"
-                              htmlFor="form3Example3c"
-                            >
-                              Your Email
-                            </label>
-                          </div>
-                        </div>
-
-                        <div className="d-flex flex-row align-items-center mb-4">
-                          <i className="fas fa-lock fa-lg me-3 fa-fw"></i>
-                          <div className="form-outline flex-fill mb-0">
-                            <input
-                              type="password"
-                              id="form3Example4c"
-                              className="form-control"
-                              name= "password"
-                              value= {profile.password}
-                              onChange={fill}
-                            />
-                            <label
-                              className="form-label"
-                              htmlFor="form3Example4c"
-                            >
-                              Password
-                            </label>
-                          </div>
-                        </div>
-
-                        <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                          <button
-                            type="button"
-                            className="btn btn-primary btn-lg"
-                            onClick={submit}
-                          >
-                            Register
-                          </button>
-                        </div>
-
-                        <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                          <button
-                            type="button"
-                            className="btn btn-primary btn-lg"
-                            onClick ={() => setStep("login")}
-                          >
-                            Already have an account? Login!
-                          </button>
-                        </div>
-
-                      </form>
-                    </div>
-                    <div className="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
-                      <img
-                        src={logo}
-                        className="img-fluid"
-                        alt="Sample image"
-                      />
-                    </div>
+              {/* Signup Form */}
+              <form onSubmit={(e) => { e.preventDefault(); submit(); }}>
+                <div className="mb-3">
+                  <label htmlFor="name" className="form-label">Full Name</label>
+                  <div className="position-relative">
+                    <FaUser style={{
+                      position: 'absolute',
+                      left: '12px',
+                      top: '50%',
+                      transform: 'translateY(-50%)',
+                      color: 'var(--text-light)'
+                    }} />
+                    <input
+                      type="text"
+                      id="name"
+                      className="form-control-modern"
+                      name="Name"
+                      value={profile.Name}
+                      onChange={fill}
+                      placeholder="Enter your full name"
+                      style={{ paddingLeft: '40px' }}
+                      required
+                    />
                   </div>
                 </div>
-              </div>
+
+                <div className="mb-3">
+                  <label htmlFor="email" className="form-label">Email Address</label>
+                  <div className="position-relative">
+                    <FaEnvelope style={{
+                      position: 'absolute',
+                      left: '12px',
+                      top: '50%',
+                      transform: 'translateY(-50%)',
+                      color: 'var(--text-light)'
+                    }} />
+                    <input
+                      type="email"
+                      id="email"
+                      className="form-control-modern"
+                      name="Email"
+                      value={profile.Email}
+                      onChange={fill}
+                      placeholder="Enter your email"
+                      style={{ paddingLeft: '40px' }}
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className="mb-4">
+                  <label htmlFor="password" className="form-label">Password</label>
+                  <div className="position-relative">
+                    <FaLock style={{
+                      position: 'absolute',
+                      left: '12px',
+                      top: '50%',
+                      transform: 'translateY(-50%)',
+                      color: 'var(--text-light)'
+                    }} />
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      id="password"
+                      className="form-control-modern"
+                      name="password"
+                      value={profile.password}
+                      onChange={fill}
+                      placeholder="Create a password"
+                      style={{ paddingLeft: '40px', paddingRight: '40px' }}
+                      required
+                    />
+                    <button
+                      type="button"
+                      className="btn btn-link position-absolute end-0 top-50 translate-middle-y"
+                      style={{ border: 'none', color: 'var(--text-light)' }}
+                      onClick={() => setShowPassword(!showPassword)}
+                    >
+                      {showPassword ? <FaEyeSlash /> : <FaEye />}
+                    </button>
+                  </div>
+                </div>
+
+                <button
+                  type="submit"
+                  className="btn-modern w-100 mb-3"
+                  disabled={loading}
+                >
+                  {loading ? (
+                    <div className="d-flex align-items-center justify-content-center">
+                      <div className="spinner-border spinner-border-sm me-2" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                      </div>
+                      Creating Account...
+                    </div>
+                  ) : (
+                    'Create Account'
+                  )}
+                </button>
+
+                <div className="text-center">
+                  <p className="text-muted mb-0">
+                    Already have an account?{" "}
+                    <button
+                      type="button"
+                      className="btn btn-link p-0 text-primary"
+                      onClick={() => setStep("login")}
+                      style={{ textDecoration: 'none' }}
+                    >
+                      Sign in here
+                    </button>
+                  </p>
+                </div>
+              </form>
             </div>
           </div>
         </div>
-      </section>
+      </div>
     </div>
   );
 };

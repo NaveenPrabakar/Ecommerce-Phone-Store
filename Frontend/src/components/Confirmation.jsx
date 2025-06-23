@@ -1,111 +1,140 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import NavBar from "./NavBar";
-import { Card, Row, Col, Container, Button } from "react-bootstrap";
 import Footer from "./Footer";
-import { useEffect } from "react";
-import { useState } from "react";
-import Generic from "../assets/generic.jpg";
+import { FaCheckCircle, FaShoppingCart, FaHome, FaFileInvoiceDollar } from 'react-icons/fa';
 
 const Confirmation = ({ setStep, setProf, prof }) => {
   const [cart, setCart] = useState([]);
+  const [orderNumber, setOrderNumber] = useState('');
 
   const getCart = async () => {
-    const result = await fetch(`http://localhost:8080/getcart/${prof.Email}`, {
-      method: "GET",
-    });
+    try {
+      const result = await fetch(`http://localhost:8080/getcart/${prof.Email}`, {
+        method: "GET",
+      });
 
-    if (result.status == 200) {
-      console.log(result);
-      setCart(await result.json());
+      if (result.status === 200) {
+        setCart(await result.json());
+      }
+    } catch (error) {
+      console.error("Error fetching cart:", error);
+    }
+  };
+
+  const removeAll = async () => {
+    try {
+      await fetch(`http://localhost:8080/removeall/${prof.Email}`, {
+        method: "DELETE",
+      });
+    } catch (error) {
+      console.error("Error clearing cart:", error);
     }
   };
 
   useEffect(() => {
+    // Fetch the cart contents to display one last time
     getCart();
-  }, [prof]);
+    
+    // Generate a random order number for display
+    setOrderNumber(`PS-${Math.floor(Math.random() * 100000000)}`);
 
-  let total = 0;
-  for (let item of cart) {
-    let discount = item.discountPercentage || 0;
-    total += item.price * (1 - discount / 100);
-  }
+    // Clear the cart in the background after displaying it
+    return () => {
+      removeAll();
+    };
+  }, []);
 
-  const removeAll = async (item) => {
-    console.log(prof);
-    const result = await fetch(
-      `http://localhost:8080/removeall/${prof.Email}`,
-      {
-        method: "DELETE",
-      }
-    );
-
-    if (result.status == 200) {
-      console.log(result);
+  const calculateTotal = () => {
+    let total = 0;
+    for (let item of cart) {
+      let discount = item.discountPercentage || 0;
+      total += item.price * (1 - discount / 100);
     }
+    return total;
   };
+  
+  const total = calculateTotal();
 
   return (
-    <div>
-      <div>
-        <Container>
-          <Card className="h-100 shadow-sm border-0">
-            <div className="d-flex">
-              <Card.Img
-                variant="top"
-                src={Generic}
-                alt={"Phones"}
-                className="w-50"
-                style={{
-                  height: "700px",
-                  width: "300px",
-                  objectFit: "cover",
-                }}
-              />
-              <Card.Body className="d-flex flex-column">
-                <Card.Title className="fs-2">Purchase Successful!</Card.Title>
-                <Card.Title className="mt-5 fs-4">Purchased Items:</Card.Title>
-                {cart.map((c) => (
-                  <Col key={c.id}>
-                    <Card className="shadow-sm border-0 mt-1">
-                      <Card.Body className="d-flex flex-column">
-                        <Card.Text>
-                          <strong>{c.title}</strong>: $
-                          {(
-                            c.price *
-                            (1 - (c.discountPercentage || 0) / 100)
-                          ).toFixed(2)}
-                        </Card.Text>
-                      </Card.Body>
-                    </Card>
-                  </Col>
-                ))}
-                <Card.Text className="mt-4 fs-5"><strong>Total</strong>: ${total.toFixed(2)}</Card.Text>
-                <div className="mt-10">
-                  <Button
-                    variant="outline-primary"
-                    className="w-100"
-                    onClick={() => {
-                      removeAll();
-                      setStep("shop");
-                    }}
-                  >
-                    Return to Shop
-                  </Button>
-                  <Button
-                    variant="outline-primary"
-                    className="w-100"
-                    onClick={() => {
-                      removeAll();
-                      setStep("login");
-                    }}
-                  >
-                    Log Out
-                  </Button>
+    <div className="app-container">
+      <NavBar setStep={setStep} setProf={setProf} prof={prof} />
+
+      <div className="container py-5">
+        <div className="row justify-content-center">
+          <div className="col-lg-8">
+            <div className="card-modern text-center p-4 p-md-5">
+              <div style={{ fontSize: '5rem', color: 'var(--primary-color)', marginBottom: '1.5rem' }}>
+                <FaCheckCircle />
+              </div>
+
+              <h1 className="mb-3">Thank You for Your Order!</h1>
+              <p className="lead text-muted mb-4">
+                Your purchase was successful. An email confirmation has been sent to {prof.Email}.
+              </p>
+
+              <div className="card-modern mb-4">
+                <div className="p-4 text-start">
+                  <h5 className="mb-3 d-flex align-items-center">
+                    <FaFileInvoiceDollar className="me-2" />
+                    Order Summary
+                  </h5>
+                  <ul className="list-group list-group-flush">
+                    <li className="list-group-item d-flex justify-content-between align-items-center">
+                      <span>Order Number:</span>
+                      <strong>{orderNumber}</strong>
+                    </li>
+                    <li className="list-group-item d-flex justify-content-between align-items-center">
+                      <span>Order Date:</span>
+                      <strong>{new Date().toLocaleDateString()}</strong>
+                    </li>
+                    <li className="list-group-item">
+                      <div className="d-flex justify-content-between align-items-center">
+                        <span>Items ({cart.length}):</span>
+                        <strong>${total.toFixed(2)}</strong>
+                      </div>
+                      <ul className="list-unstyled mt-2 mb-0 ps-3">
+                        {cart.map(item => (
+                          <li key={item.id} className="text-muted small">
+                            - {item.title}
+                          </li>
+                        ))}
+                      </ul>
+                    </li>
+                    <li className="list-group-item d-flex justify-content-between align-items-center">
+                      <span>Taxes (8%):</span>
+                      <strong>${(total * 0.08).toFixed(2)}</strong>
+                    </li>
+                    <li className="list-group-item d-flex justify-content-between align-items-center fs-5">
+                      <strong>Total:</strong>
+                      <strong className="text-primary">${(total * 1.08).toFixed(2)}</strong>
+                    </li>
+                  </ul>
                 </div>
-              </Card.Body>
+              </div>
+
+              <p className="text-muted mb-4">
+                Your order will be shipped within 3-5 business days. You can track your order status from your account page once it has shipped.
+              </p>
+
+              <div className="d-flex justify-content-center gap-3">
+                <button
+                  className="btn-modern"
+                  onClick={() => setStep("shop")}
+                >
+                  <FaShoppingCart className="me-2" />
+                  Continue Shopping
+                </button>
+                <button
+                  className="btn-outline-modern"
+                  onClick={() => setStep("home")}
+                >
+                  <FaHome className="me-2" />
+                  Go to Homepage
+                </button>
+              </div>
             </div>
-          </Card>
-        </Container>
+          </div>
+        </div>
       </div>
       <Footer />
     </div>
