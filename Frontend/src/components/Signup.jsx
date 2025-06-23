@@ -44,7 +44,7 @@ const SignUpForm = ({ setStep, setSuccess }) => {
     }
 
     try {
-      const response = await fetch("http://localhost:8080/signup", {
+      const response = await fetch("${import.meta.env.VITE_API_URL}signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
