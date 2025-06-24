@@ -32,7 +32,7 @@ const Login = ({ setStep, setSuccess, success, setProf }) => {
     }
 
     try {
-      const result = await fetch("http://localhost:8080/login", {
+      const result = await fetch(`${import.meta.env.VITE_API_URL}login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
