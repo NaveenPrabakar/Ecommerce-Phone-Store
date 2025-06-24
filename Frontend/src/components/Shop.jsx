@@ -18,7 +18,7 @@ const Shop = ({ setStep, setProf, prof, setItem }) => {
 
   const getProducts = async () => {
     try {
-      const result = await fetch(`http://localhost:8080/products`, {
+      const result = await fetch(`${import.meta.env.VITE_API_URL}products`, {
         method: "GET",
       });
 
