@@ -1,94 +1,173 @@
+# PhoneStore - Modern E-commerce Phone Marketplace
 
-## 319 Final Project
+A comprehensive e-commerce platform for buying and selling smartphones, built with modern web technologies. This full-stack application provides a seamless marketplace experience for customers, sellers, and administrators.
 
-### Project Overview
+## 🎯 Project Purpose
 
-This project is a full-stack MERN web application developed for COM S 319 at Iowa State University. It leverages React.js for the frontend, Node.js and Express for the backend, MongoDB for data storage, and Tailwind CSS for modern, utility-first styling. The application demonstrates end-to-end development with a focus on clean UI, responsive design, and robust CRUD functionality.
+PhoneStore is a modern e-commerce platform designed to facilitate the buying and selling of smartphones. The application serves three distinct user types:
 
----
+- **Customers**: Browse, search, and purchase phones with a modern shopping experience
+- **Sellers**: List and sell their used phones through a secure platform
+- **Administrators**: Manage the marketplace, monitor transactions, and ensure platform security
 
-### What Does the Project Do?
+## 🚀 Key Features
 
-- **User Authentication:** Secure registration and login system.
-- **CRUD Operations:** Users can create, read, update, and delete data entries.
-- **Responsive UI:** Built with React.js and styled exclusively with Tailwind CSS for a modern, mobile-friendly experience[^1][^2].
-- **REST API:** Express and Node.js power the backend, exposing endpoints for all data operations.
-- **Database Integration:** MongoDB stores all application data, ensuring persistence and flexibility.
+### Customer Features
+- **Modern Shopping Experience**: Clean, responsive interface with smooth animations
+- **Advanced Product Browsing**: Search, filter, and sort through phone listings
+- **Shopping Cart Management**: Add items, manage quantities, and secure checkout
+- **User Authentication**: Secure login and registration system
+- **Product Details**: Comprehensive product pages with images and specifications
 
----
+### Seller Features
+- **Easy Listing Process**: Simple interface to list phones for sale
+- **Secure Transactions**: Protected payment processing and escrow system
+- **Admin Monitoring**: Expert team oversight to prevent scams and ensure quality
 
-### Tech Stack
+### Admin Features
+- **Comprehensive Admin Panel**: Manage products, users, and transactions
+- **Content Moderation**: Monitor listings and remove potential scams
+- **Analytics Dashboard**: Track sales, user activity, and platform metrics
 
-| Layer | Technology |
-| :-- | :-- |
-| Frontend | React.js, Tailwind CSS |
-| Backend | Node.js, Express |
-| Database | MongoDB |
+## 🛠️ Tech Stack
 
+### Frontend
+- **React**: Latest React with modern hooks and patterns
+- **Vite**: Fast build tool and development server
+- **Tailwind CSS**: Utility-first CSS framework for rapid UI development
+- **Bootstrap**: Additional UI components and responsive grid system
+- **React Icons**: Comprehensive icon library
+- **Chart.js**: Data visualization for analytics
+- **React Chart.js 2**: React wrapper for Chart.js
 
----
+### Backend
+- **Node.js**: JavaScript runtime environment
+- **Express.js **: Fast, unopinionated web framework
+- **MongoDB**: NoSQL database for flexible data storage
+- **MongoDB Compass**: Database management and visualization tool
+- **CORS**: Cross-origin resource sharing middleware
+- **Body Parser**: Request body parsing middleware
 
-### Key Features
+### Development Tools
+- **Git**: Version control system
 
-- **Modern UI:** All components styled with Tailwind CSS for a sleek, consistent appearance.
-- **Single-Page Application:** Fast and interactive user experience with React.
-- **API-Driven:** RESTful endpoints for all data interactions.
-- **Authentication:** User sessions are managed securely.
-- **Mobile-First:** Fully responsive layouts using Tailwind’s utility classes
-
----
-
-### Typical User Flow
-
-1. **Register or Log In:** Users create an account or sign in.
-2. **Dashboard:** Access personalized content and manage data.
-3. **CRUD Actions:** Add, edit, or remove entries with instant feedback.
-
----
-
-### Getting Started
-
-1. **Clone the repository:**
-
-```bash
-git clone https://github.com/NaveenPrabakar/319-Final-Project.git
-cd 319-Final-Project
-```
-
-2. **Install backend dependencies:**
-
-```bash
-cd backend
-npm install
-```
-
-3. **Install frontend dependencies:**
-
-```bash
-cd ../frontend
-npm install
-```
-
-4. **Set up environment variables in `backend/.env`:**
+## 📁 Project Structure
 
 ```
-MONGODB_URI=your-mongodb-connection-string
-PORT=5000
+PS_2/
+├── Frontend/                 # React frontend application
+│   ├── src/
+│   │   ├── components/      # React components
+│   │   ├── assets/          # Static assets (images, icons)
+│   │   └── data/           # Static data files
+│   ├── public/             # Public assets
+│   └── package.json        # Frontend dependencies
+├── Backend/                # Node.js backend application
+│   ├── routes/            # API route handlers
+│   │   ├── account.js     # User authentication routes
+│   │   ├── admin.js       # Admin panel routes
+│   │   ├── cart.js        # Shopping cart routes
+│   │   ├── products.js    # Product management routes
+│   │   └── sell.js        # Seller listing routes
+│   ├── App.js             # Main server configuration
+│   └── package.json       # Backend dependencies
+└── Documents/             # Project documentation and assets
 ```
 
-5. **Start the backend:**
+## 🚧 Currently Working On
 
-```bash
-cd backend
-npm start
+### Database Migration
+- **MongoDB Compass → MongoDB Atlas**: Migrating from local MongoDB Compass to cloud-based MongoDB Atlas for improved scalability, reliability, and global accessibility
+- **Benefits**: 
+  - Automatic backups and disaster recovery
+  - Global distribution and low-latency access
+  - Built-in security and compliance features
+  - Scalable infrastructure without server management
+
+### Backend Deployment
+- **AWS Lambda + API Gateway**: Deploying the backend to AWS Lambda with API Gateway for serverless architecture
+- **Benefits**:
+  - Auto-scaling based on demand
+  - Pay-per-use pricing model
+  - High availability and fault tolerance
+  - Reduced operational overhead
+  - Global edge locations for low latency
+
+## 📦 Installation & Setup
+
+### Prerequisites
+- Node.js (v18 or higher)
+- npm or yarn package manager
+- MongoDB Atlas account (for production)
+- AWS account (for deployment)
+
+### Local Development
+
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd PS_2
+   ```
+
+2. **Install Frontend Dependencies**
+   ```bash
+   cd Frontend
+   npm install
+   ```
+
+3. **Install Backend Dependencies**
+   ```bash
+   cd ../Backend
+   npm install
+   ```
+
+4. **Start Development Servers**
+   ```bash
+   # Terminal 1 - Frontend
+   cd Frontend
+   npm run dev
+   
+   # Terminal 2 - Backend
+   cd Backend
+   node App.js
+   ```
+
+5. **Access the Application**
+   - Frontend: `http://localhost:5173`
+   - Backend API: `http://localhost:8000`
+
+## 🔧 Environment Configuration
+
+### Frontend Environment Variables
+Create `.env` file in the Frontend directory:
+```env
+VITE_API_BASE_URL=http://localhost:8000
+VITE_APP_NAME=PhoneStore
 ```
 
-6. **Start the frontend:**
-
-```bash
-cd frontend
-npm run dev
+### Backend Environment Variables
+Create `.env` file in the Backend directory:
+```env
+MONGODB_URI=your_mongodb_atlas_connection_string
+PORT=8000
 ```
 
+## 📱 Application Pages
+
+### Core Pages
+- **Home**: Landing page with hero section and featured products
+- **Shop**: Product browsing with search and filtering
+- **Cart**: Shopping cart management and checkout
+- **Login/Signup**: User authentication forms
+- **Sell**: Phone listing interface for sellers
+- **Admin**: Administrative dashboard and controls
+- **Settings**: User profile and preferences
+- **About**: Company information and contact details
 
 
+## 📄 License
+
+This project is created by **Naveen Prabakar & Mucu Milo** for educational purposes.
+
+
+**Built with ❤️ by Naveen Prabakar & Mucu Milo**
