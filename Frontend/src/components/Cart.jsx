@@ -9,7 +9,7 @@ const Cart = ({ setStep, setProf, prof }) => {
 
   const getCart = async () => {
     try {
-      const result = await fetch(`http://localhost:8080/getcart/${prof.Email}`, {
+      const result = await fetch(`${import.meta.env.VITE_API_URL}getcart/${prof.Email}`, {
         method: "GET",
       });
 
@@ -36,7 +36,7 @@ const Cart = ({ setStep, setProf, prof }) => {
   const removeCartItem = async (item) => {
     try {
       const result = await fetch(
-        `http://localhost:8080/removeitem/${prof.Email}/${item.id}`,
+        `${import.meta.env.VITE_API_URL}removeitem/${prof.Email}/${item.id}`,
         {
           method: "DELETE",
         }
