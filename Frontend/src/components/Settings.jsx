@@ -39,7 +39,7 @@ const Settings = ({ setStep, setProf, prof }) => {
     const updatedProfile = { ...prof, Name: form.name, Email: form.email };
 
     try {
-      const result = await fetch(`http://localhost:8080/change/${originalEmail}`, {
+      const result = await fetch(`${import.meta.env.VITE_API_URL}change/${originalEmail}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(updatedProfile),
