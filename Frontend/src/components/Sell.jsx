@@ -38,7 +38,7 @@ const Sell = ({ setStep, setProf, prof, setId }) => {
   };
 
   function get_sold() {
-    fetch(`http://127.0.0.1:8080/sold/${prof.Email}`)
+    fetch(`${import.meta.env.VITE_API_URL}sold/${prof.Email}`)
       .then((response) => response.json())
       .then((data) => {
         setSoldItems(data);
@@ -51,7 +51,7 @@ const Sell = ({ setStep, setProf, prof, setId }) => {
   const handleDelete = async(id) => {
     if (window.confirm("Are you sure you want to delete this listing?")) {
       try {
-        const result = await fetch(`http://localhost:8080/done/${id}/${prof.Email}`, {
+        const result = await fetch(`${import.meta.env.VITE_API_URL}done/${id}/${prof.Email}`, {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
@@ -102,7 +102,7 @@ const Sell = ({ setStep, setProf, prof, setId }) => {
     }
 
     try {
-      const result = await fetch("http://localhost:8080/sell", {
+      const result = await fetch(`${import.meta.env.VITE_API_URL}sell`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
