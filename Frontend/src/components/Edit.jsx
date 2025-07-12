@@ -27,7 +27,7 @@ const Edit = ({ setStep, setProf, prof, id }) => {
   };
 
   function get_sold() {
-    fetch(`http://127.0.0.1:8080/sold/${prof.Email}`)
+    fetch(`${import.meta.env.VITE_API_URL}sold/${prof.Email}`)
       .then((response) => response.json())
       .then((data) => {
         const item = data.find((p) => p.id === id);
@@ -58,7 +58,7 @@ const Edit = ({ setStep, setProf, prof, id }) => {
         return;
       }
 
-      const result = await fetch(`http://localhost:8080/fix/${id}`, {
+      const result = await fetch(`${import.meta.env.VITE_API_URL}fix/${id}`, {
         // send the form data to backend
         method: "PUT",
         headers: {
