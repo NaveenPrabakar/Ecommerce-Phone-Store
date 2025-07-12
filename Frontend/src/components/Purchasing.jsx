@@ -31,7 +31,7 @@ const Purchasing = ({ setStep, setProf, prof, addItem }) => {
 
   const addCartItem = async (item) => {
     try {
-      const result = await fetch(`http://localhost:8080/additem/${prof.Email}`, {
+      const result = await fetch(`${import.meta.env.VITE_API_URL}additem/${prof.Email}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
