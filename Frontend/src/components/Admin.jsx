@@ -67,8 +67,8 @@ const Admin = ({ setStep, prof }) => {
   const fetchData = async () => {
     try {
       const [productsRes, usersRes] = await Promise.all([
-        fetch(`http://localhost:8080/products`),
-        fetch(`http://localhost:8080/users`)
+        fetch(`${import.meta.env.VITE_API_URL}products`),
+        fetch(`${import.meta.env.VITE_API_URL}users`)
       ]);
 
       if (productsRes.ok) {
@@ -89,7 +89,7 @@ const Admin = ({ setStep, prof }) => {
   const removeItem = async (item) => {
     if (window.confirm(`Are you sure you want to remove the listing "${item.title}"?`)) {
       try {
-        const result = await fetch(`http://localhost:8080/adminremove/${item.id}`, { method: "DELETE" });
+        const result = await fetch(`${import.meta.env.VITE_API_URL}adminremove/${item.id}`, { method: "DELETE" });
         if (result.ok) fetchData(); // Refetch all data
       } catch (error) {
         console.error("Error removing item:", error);
