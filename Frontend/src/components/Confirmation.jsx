@@ -9,7 +9,7 @@ const Confirmation = ({ setStep, setProf, prof }) => {
 
   const getCart = async () => {
     try {
-      const result = await fetch(`http://localhost:8080/getcart/${prof.Email}`, {
+      const result = await fetch(`${import.meta.env.VITE_API_URL}getcart/${prof.Email}`, {
         method: "GET",
       });
 
@@ -23,7 +23,7 @@ const Confirmation = ({ setStep, setProf, prof }) => {
 
   const removeAll = async () => {
     try {
-      await fetch(`http://localhost:8080/removeall/${prof.Email}`, {
+      await fetch(`${import.meta.env.VITE_API_URL}removeall/${prof.Email}`, {
         method: "DELETE",
       });
     } catch (error) {
