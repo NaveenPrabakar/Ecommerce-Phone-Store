@@ -20,7 +20,6 @@ const products = require("./routes/products");
 
 app.use("/", account);
 app.use("/", sell);
-app.use("/", ai);
 app.use("/", cart);
 app.use("/", admin);
 app.use("/", products);
