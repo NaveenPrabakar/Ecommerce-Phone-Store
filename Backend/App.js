@@ -14,7 +14,6 @@ const host = "localhost";
 
 const account = require("./routes/account");
 const sell = require("./routes/sell");
-const ai = require("./routes/ai");
 const cart = require("./routes/cart");
 const admin = require("./routes/admin");
 const products = require("./routes/products");
