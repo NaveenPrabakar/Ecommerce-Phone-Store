@@ -3,7 +3,7 @@ const router = express.Router();
 
 
 //connect to mongoDB
-const url = "process.env.MONGO_URL";
+const url = process.env.MONGO_URL;
 const dbName = "phones";
 const { MongoClient } = require("mongodb");
 const client = new MongoClient(url);
