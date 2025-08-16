@@ -28,3 +28,8 @@ app.use("/", products);
 app.listen(port, () => {
     console.log("App listening at http://%s:%s", host, port);
 });
+
+app.get("/ping", (req, res) => {
+  res.send("pong");
+});
+
